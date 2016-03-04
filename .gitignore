@@ -1,0 +1,6 @@
+.DS_Store
+*.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata
+*.xcodeproj/.LSOverride
+*.xcworkspace/xcuserdata
+Pods/Pods.xcodeproj/xcuserdata
