@@ -16,6 +16,10 @@
 		B94778521C895A0D005D9380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B947784E1C895A0D005D9380 /* Main.storyboard */; };
 		B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778531C895A1E005D9380 /* AppDelegate.swift */; };
 		B94778561C895A25005D9380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778551C895A25005D9380 /* ViewController.swift */; };
+		B995441D1C8DBCBF00ABD259 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441C1C8DBCBF00ABD259 /* Entry.swift */; };
+		B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441E1C8DBCCF00ABD259 /* Feed.swift */; };
+		B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */; };
+		B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,10 @@
 		B947784E1C895A0D005D9380 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B94778531C895A1E005D9380 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B94778551C895A25005D9380 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B995441C1C8DBCBF00ABD259 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		B995441E1C8DBCCF00ABD259 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformable.swift; sourceTree = "<group>"; };
+		B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +169,7 @@
 		B94778471C8959DA005D9380 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				B99544241C8DBD3800ABD259 /* XMLFeedTransformer */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -168,6 +177,8 @@
 		B94778481C8959DA005D9380 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				B995441C1C8DBCBF00ABD259 /* Entry.swift */,
+				B995441E1C8DBCCF00ABD259 /* Feed.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -188,6 +199,16 @@
 				B947784E1C895A0D005D9380 /* Main.storyboard */,
 			);
 			path = resources;
+			sourceTree = "<group>";
+		};
+		B99544241C8DBD3800ABD259 /* XMLFeedTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */,
+				B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */,
+			);
+			name = XMLFeedTransformer;
+			path = XMLFeedTransformer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,7 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B995441D1C8DBCBF00ABD259 /* Entry.swift in Sources */,
+				B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */,
 				B94778561C895A25005D9380 /* ViewController.swift in Sources */,
+				B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */,
+				B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */,
 				B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
