@@ -20,6 +20,7 @@
 		B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441E1C8DBCCF00ABD259 /* Feed.swift */; };
 		B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */; };
 		B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */; };
+		B995442C1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		B995441E1C8DBCCF00ABD259 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformable.swift; sourceTree = "<group>"; };
 		B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformer.swift; sourceTree = "<group>"; };
+		B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformerTransformRSSTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 		B947782B1C895995005D9380 /* SimpleRSSReaderTests */ = {
 			isa = PBXGroup;
 			children = (
+				B99544291C8F18A700ABD259 /* libs */,
 				B947782C1C895995005D9380 /* SimpleRSSReaderTests.swift */,
 				B947782E1C895995005D9380 /* Info.plist */,
 			);
@@ -207,7 +210,22 @@
 				B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */,
 				B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */,
 			);
-			name = XMLFeedTransformer;
+			path = XMLFeedTransformer;
+			sourceTree = "<group>";
+		};
+		B99544291C8F18A700ABD259 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B995442A1C8F18A700ABD259 /* XMLFeedTransformer */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		B995442A1C8F18A700ABD259 /* XMLFeedTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */,
+			);
 			path = XMLFeedTransformer;
 			sourceTree = "<group>";
 		};
@@ -408,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B947782D1C895995005D9380 /* SimpleRSSReaderTests.swift in Sources */,
+				B995442C1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
