@@ -16,6 +16,7 @@
 		B94778521C895A0D005D9380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B947784E1C895A0D005D9380 /* Main.storyboard */; };
 		B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778531C895A1E005D9380 /* AppDelegate.swift */; };
 		B94778561C895A25005D9380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778551C895A25005D9380 /* ViewController.swift */; };
+		B9596C491C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9596C481C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift */; };
 		B995441D1C8DBCBF00ABD259 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441C1C8DBCBF00ABD259 /* Entry.swift */; };
 		B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441E1C8DBCCF00ABD259 /* Feed.swift */; };
 		B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */; };
@@ -57,6 +58,7 @@
 		B947784E1C895A0D005D9380 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B94778531C895A1E005D9380 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B94778551C895A25005D9380 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B9596C481C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformerTransformAtomTests.swift; sourceTree = "<group>"; };
 		B995441C1C8DBCBF00ABD259 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		B995441E1C8DBCCF00ABD259 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformable.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 		B995442A1C8F18A700ABD259 /* XMLFeedTransformer */ = {
 			isa = PBXGroup;
 			children = (
+				B9596C481C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift */,
 				B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */,
 			);
 			path = XMLFeedTransformer;
@@ -425,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9596C491C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift in Sources */,
 				B947782D1C895995005D9380 /* SimpleRSSReaderTests.swift in Sources */,
 				B995442C1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift in Sources */,
 			);
