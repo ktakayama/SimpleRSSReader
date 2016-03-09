@@ -31,7 +31,10 @@ class XMLFeedTransformer: NSObject {
     class func transform<T: XMLFeedTransformable where T.TransformType == T>(xmlData: String) throws -> T {
         let xml = SWXMLHash.parse(xmlData)
 
-        for transform: XMLFeedTransformerTransformType in [ XMLFeedTransformerTransformRSS() ] {
+        for transform: XMLFeedTransformerTransformType in [
+            XMLFeedTransformerTransformAtom(),
+            XMLFeedTransformerTransformRSS()
+        ] {
             if transform.isCompatibleType(xml) {
                 return try transform.transform(xml)
             }
@@ -44,6 +47,48 @@ class XMLFeedTransformer: NSObject {
 protocol XMLFeedTransformerTransformType {
     func isCompatibleType(xml: XMLIndexer) -> Bool
     func transform<T: XMLFeedTransformable where T.TransformType == T>(xml: XMLIndexer) throws -> T
+}
+
+struct XMLFeedTransformerTransformAtom: XMLFeedTransformerTransformType {
+    static var dateFormatter: NSDateFormatter {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return formatter
+    }
+
+    func isCompatibleType(xml: XMLIndexer) -> Bool {
+        let xmlns = xml["feed"].element?.attributes["xmlns"] ?? ""
+        if xmlns == "http://purl.org/atom/ns#" || xmlns == "http://www.w3.org/2005/Atom" {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    func transform<T: XMLFeedTransformable where T.TransformType == T>(xml: XMLIndexer) throws -> T {
+        let title = xml["feed"]["title"].element?.text ?? ""
+        let identifier = xml["feed"]["id"].element?.text ?? title
+        if title.characters.count == 0 || identifier.characters.count == 0 { throw XMLFeedTransformError.ParseError }
+        let feedInfo = XMLFeedInfo(identifier: identifier, title: title)
+
+        var feedItems = [ XMLFeedItem ]()
+        xml["feed"]["entry"].all.forEach { item in
+            if let id = item["id"].element?.text {
+                var date: NSDate?
+                if let dateString = item["created"].element?.text ?? item["updated"].element?.text {
+                    date = self.dynamicType.dateFormatter.dateFromString(dateString)
+                }
+                let feedItem = XMLFeedItem(identifier: id, title: item["title"].element?.text,
+                    summary: item["summary"].element?.text,
+                    publicAt: date,
+                    thumbnailURL: nil, linkURL: item["link"].element?.attributes["href"])
+                feedItems.append(feedItem)
+            }
+        }
+
+        return T.mapping(feedInfo, feedItems: feedItems)
+    }
 }
 
 struct XMLFeedTransformerTransformRSS: XMLFeedTransformerTransformType {
