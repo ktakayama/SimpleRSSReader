@@ -37,4 +37,17 @@ class Feed: Object, XMLFeedTransformable {
 
         return feed
     }
+
+    func insertRecentEntries(recentEntries: List<Entry>) {
+        var newEntries = List<Entry>()
+
+        if let realm = self.realm {
+            newEntries.appendContentsOf(recentEntries.filter { self.entries.filter("identifier == %@", $0.identifier).count == 0 })
+            realm.addNotified(newEntries, update:true)
+        } else {
+            newEntries = recentEntries
+        }
+
+        self.entries.appendContentsOf(newEntries)
+    }
 }

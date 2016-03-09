@@ -17,6 +17,7 @@
 		B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778531C895A1E005D9380 /* AppDelegate.swift */; };
 		B94778561C895A25005D9380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778551C895A25005D9380 /* ViewController.swift */; };
 		B9596C491C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9596C481C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift */; };
+		B9596C4B1C9066D70045227C /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9596C4A1C9066D70045227C /* FeedManager.swift */; };
 		B995441D1C8DBCBF00ABD259 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441C1C8DBCBF00ABD259 /* Entry.swift */; };
 		B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995441E1C8DBCCF00ABD259 /* Feed.swift */; };
 		B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */; };
@@ -59,6 +60,7 @@
 		B94778531C895A1E005D9380 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B94778551C895A25005D9380 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B9596C481C905D2E0045227C /* XMLFeedTransformerTransformAtomTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformerTransformAtomTests.swift; sourceTree = "<group>"; };
+		B9596C4A1C9066D70045227C /* FeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManager.swift; sourceTree = "<group>"; };
 		B995441C1C8DBCBF00ABD259 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		B995441E1C8DBCCF00ABD259 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformable.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				B995441C1C8DBCBF00ABD259 /* Entry.swift */,
 				B995441E1C8DBCCF00ABD259 /* Feed.swift */,
+				B9596C4A1C9066D70045227C /* FeedManager.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */,
 				B94778561C895A25005D9380 /* ViewController.swift in Sources */,
 				B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */,
+				B9596C4B1C9066D70045227C /* FeedManager.swift in Sources */,
 				B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */,
 				B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */,
 			);
