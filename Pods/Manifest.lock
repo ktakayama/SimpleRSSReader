@@ -15,6 +15,7 @@ PODS:
   - SWXMLHash (2.1.0)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
+  - UIAlertControllerExtension (1.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - SwiftTask
   - SWXMLHash
   - UIActivityIndicator-for-SDWebImage
+  - UIAlertControllerExtension
 
 SPEC CHECKSUMS:
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
@@ -36,5 +38,6 @@ SPEC CHECKSUMS:
   SwiftTask: 7b0e7d26f4461442219d2cee1bff82830f8c1d34
   SWXMLHash: 7257a358b3ab2f7a209e0b4e4cf552e8b6df5f0f
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
+  UIAlertControllerExtension: d3aaf48590f182096b8bb81997ae54f24ccc07ab
 
 COCOAPODS: 0.39.0

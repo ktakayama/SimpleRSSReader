@@ -93,6 +93,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/SWXMLHash.framework"
   install_framework "Pods/SwiftTask.framework"
   install_framework "Pods/UIActivityIndicator_for_SDWebImage.framework"
+  install_framework "Pods/UIAlertControllerExtension.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
@@ -104,4 +105,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/SWXMLHash.framework"
   install_framework "Pods/SwiftTask.framework"
   install_framework "Pods/UIActivityIndicator_for_SDWebImage.framework"
+  install_framework "Pods/UIAlertControllerExtension.framework"
 fi
