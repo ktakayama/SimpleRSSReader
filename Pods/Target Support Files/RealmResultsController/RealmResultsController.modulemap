@@ -1,0 +1,6 @@
+framework module RealmResultsController {
+  umbrella header "RealmResultsController-umbrella.h"
+
+  export *
+  module * { export * }
+}
