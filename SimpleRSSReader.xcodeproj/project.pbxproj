@@ -11,7 +11,6 @@
 		B947782D1C895995005D9380 /* SimpleRSSReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B947782C1C895995005D9380 /* SimpleRSSReaderTests.swift */; };
 		B94778381C895995005D9380 /* SimpleRSSReaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778371C895995005D9380 /* SimpleRSSReaderUITests.swift */; };
 		B947784F1C895A0D005D9380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B947784B1C895A0D005D9380 /* Assets.xcassets */; };
-		B94778501C895A0D005D9380 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B947784C1C895A0D005D9380 /* Info.plist */; };
 		B94778511C895A0D005D9380 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B947784D1C895A0D005D9380 /* LaunchScreen.storyboard */; };
 		B94778521C895A0D005D9380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B947784E1C895A0D005D9380 /* Main.storyboard */; };
 		B94778541C895A1E005D9380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778531C895A1E005D9380 /* AppDelegate.swift */; };
@@ -343,7 +342,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B94778511C895A0D005D9380 /* LaunchScreen.storyboard in Resources */,
-				B94778501C895A0D005D9380 /* Info.plist in Resources */,
 				B947784F1C895A0D005D9380 /* Assets.xcassets in Resources */,
 				B94778521C895A0D005D9380 /* Main.storyboard in Resources */,
 			);
