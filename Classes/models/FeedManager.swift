@@ -17,6 +17,28 @@ final class FeedManager: NSObject {
 
     static let sharedInstance: FeedManager = FeedManager()
 
+    private static let lastSelectedFeedKey = "lastSelectedFeed"
+    static var lastSelectedFeed: Feed? {
+        set {
+            if let feed = newValue {
+                NSUserDefaults.standardUserDefaults().setObject(feed.identifier, forKey:lastSelectedFeedKey)
+            } else {
+                NSUserDefaults.standardUserDefaults().removeObjectForKey(lastSelectedFeedKey)
+            }
+        }
+
+        get {
+            if let feedIdentifier = NSUserDefaults.standardUserDefaults().objectForKey(lastSelectedFeedKey) {
+                do {
+                    let realm = try Realm()
+                    return realm.objectForPrimaryKey(Feed.self, key:feedIdentifier)
+                } catch {
+                }
+            }
+            return nil
+        }
+    }
+
     var taskCache = [ String:FeedTask ]()
 
     class func fetchFeed(feed: Feed) -> FeedTask {

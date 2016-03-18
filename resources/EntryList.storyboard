@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Onj-tO-KvX">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Entry List View Controller-->
+        <scene sceneID="6Od-lG-1VX">
+            <objects>
+                <tableViewController id="ykT-Pw-eRq" customClass="EntryListViewController" customModule="SimpleRSSReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="52" sectionHeaderHeight="28" sectionFooterHeight="28" id="0PR-BI-8jL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="entryCell" id="eRI-Ap-LtT" customClass="EntryListCellView" customModule="SimpleRSSReader" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="52"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eRI-Ap-LtT" id="eId-Ap-k3c">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="51"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="JUT-pl-omv">
+                                            <rect key="frame" x="15" y="5" width="570" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="F65-Iv-LdS"/>
+                                            </constraints>
+                                            <string key="text">Title
+Title</string>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="F65-Iv-LdS"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Zao-Sl-NN7">
+                                            <rect key="frame" x="15" y="31" width="570" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="8CU-VS-oAF"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Zao-Sl-NN7" firstAttribute="leading" secondItem="eId-Ap-k3c" secondAttribute="leading" constant="15" id="3tF-3s-atM"/>
+                                        <constraint firstAttribute="trailing" secondItem="JUT-pl-omv" secondAttribute="trailing" constant="15" id="Hwx-c7-Bwz"/>
+                                        <constraint firstItem="JUT-pl-omv" firstAttribute="top" secondItem="eId-Ap-k3c" secondAttribute="top" constant="5" id="cHo-tn-s6j"/>
+                                        <constraint firstItem="JUT-pl-omv" firstAttribute="leading" secondItem="eId-Ap-k3c" secondAttribute="leading" constant="15" id="eEI-6w-pgq"/>
+                                        <constraint firstItem="Zao-Sl-NN7" firstAttribute="top" secondItem="JUT-pl-omv" secondAttribute="bottom" constant="2" id="gou-Hw-Fbz"/>
+                                        <constraint firstAttribute="bottom" secondItem="Zao-Sl-NN7" secondAttribute="bottom" constant="5" id="mBk-Lb-caI"/>
+                                        <constraint firstAttribute="trailing" secondItem="Zao-Sl-NN7" secondAttribute="trailing" constant="15" id="vOI-2j-Q28"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="Zao-Sl-NN7" id="7hS-FS-cGu"/>
+                                    <outlet property="titleLabel" destination="JUT-pl-omv" id="yhC-gY-avq"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ykT-Pw-eRq" id="Ece-GH-G1Q"/>
+                            <outlet property="delegate" destination="ykT-Pw-eRq" id="tf8-nV-c0S"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem systemItem="organize" id="B7O-Do-TFR">
+                            <connections>
+                                <segue destination="rkZ-Eb-N7M" kind="popoverPresentation" identifier="feedListViewController" popoverAnchorBarButtonItem="B7O-Do-TFR" id="9VX-42-Gq1">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="XLU-w9-AHp"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="ae7-vy-X0y"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="i8p-uD-Yvg">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="performActionRefresh:" destination="ykT-Pw-eRq" eventType="valueChanged" id="Rmy-Zp-k6r"/>
+                        </connections>
+                    </refreshControl>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MnT-cb-quw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="681" y="-394"/>
+        </scene>
+        <!--FeedList-->
+        <scene sceneID="Ug9-NW-rmy">
+            <objects>
+                <viewControllerPlaceholder storyboardName="FeedList" id="rkZ-Eb-N7M" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U1O-59-9Og" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1287" y="-394"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IUe-eE-w3F">
+            <objects>
+                <navigationController toolbarHidden="NO" id="Onj-tO-KvX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5ey-E6-baX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="VKk-js-Te1">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="ykT-Pw-eRq" kind="relationship" relationship="rootViewController" id="KMl-Mj-ASh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xML-oV-dnw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-138" y="-395"/>
+        </scene>
+    </scenes>
+</document>

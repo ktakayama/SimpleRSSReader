@@ -16,6 +16,14 @@ class Feed: Object, XMLFeedTransformable {
     dynamic var updatedAt: NSDate = NSDate()
     var entries = List<Entry>()
 
+    var unreadCount: Int {
+        if self.realm == nil {
+            return entries.filter { $0.invalidated == false && $0.unread == true }.count
+        } else {
+            return entries.filter("unread == true").count
+        }
+    }
+
     override static func primaryKey() -> String? { return "identifier" }
 
     static func mapping(feedInfo: XMLFeedInfo, feedItems: [ XMLFeedItem ]) -> Feed {
