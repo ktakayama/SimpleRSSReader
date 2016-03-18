@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (3.2.1)
+  - AlamofireNetworkActivityIndicator (1.0.0):
+    - Alamofire (~> 3.2)
   - CZDateFormatterCache (1.2)
   - Realm (0.98.3):
     - Realm/Headers (= 0.98.3)
@@ -20,6 +22,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AlamofireNetworkActivityIndicator
   - CZDateFormatterCache
   - RealmResultsController
   - RealmSwift
@@ -32,6 +35,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
+  AlamofireNetworkActivityIndicator: 34e6fe7ebb5d8df76cc55fbf83a6087ae6457344
   CZDateFormatterCache: 3a75678534fd0b6153d1c6f839de59f0102e080a
   Realm: c6a7d00221a2d5177810a674aebd40c5e0b70b0f
   RealmResultsController: fa239f5274a5fe3984bf857b1ec253be5a245c3a

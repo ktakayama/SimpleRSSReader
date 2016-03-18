@@ -3,6 +3,7 @@ use_frameworks!
 
 pod 'SwiftTask'
 pod 'Alamofire'
+pod 'AlamofireNetworkActivityIndicator'
 pod 'SVProgressHUD'
 pod 'RealmSwift'
 pod 'RealmResultsController'
