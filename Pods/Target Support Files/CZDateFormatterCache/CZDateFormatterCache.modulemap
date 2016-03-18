@@ -1,0 +1,6 @@
+framework module CZDateFormatterCache {
+  umbrella header "CZDateFormatterCache-umbrella.h"
+
+  export *
+  module * { export * }
+}

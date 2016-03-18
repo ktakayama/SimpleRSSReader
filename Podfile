@@ -10,5 +10,6 @@ pod 'SWXMLHash'
 pod 'SDWebImage'
 pod 'UIActivityIndicator-for-SDWebImage'
 pod 'UIAlertControllerExtension'
+pod 'CZDateFormatterCache'
 
 
