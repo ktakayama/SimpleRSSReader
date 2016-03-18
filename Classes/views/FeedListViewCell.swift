@@ -10,13 +10,13 @@ import UIKit
 
 class FeedListViewCell: UITableViewCell {
 
-    @IBOutlet var titleLabel: UILabel?
-    @IBOutlet var unreadCountLabel: UILabel?
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var unreadCountLabel: UILabel!
 
     var feed: Feed? {
         didSet {
-            titleLabel?.text = feed?.title
-            unreadCountLabel?.text = String(feed?.unreadCount ?? 0)
+            titleLabel.text = feed?.title
+            unreadCountLabel.text = String(feed?.unreadCount ?? 0)
         }
     }
 

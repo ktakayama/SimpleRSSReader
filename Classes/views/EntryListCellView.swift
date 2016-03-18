@@ -11,17 +11,17 @@ import CZDateFormatterCache
 
 class EntryListCellView: UITableViewCell {
 
-    @IBOutlet var titleLabel: UILabel?
-    @IBOutlet var dateLabel: UILabel?
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
 
     var entry: Entry? {
         didSet {
-            titleLabel?.text = entry?.title
-            dateLabel?.text = CZDateFormatterCache.mainThreadCache()
+            titleLabel.text = entry?.title
+            dateLabel.text = CZDateFormatterCache.mainThreadCache()
             .localizedStringFromDate(entry?.publicAt, dateStyle:.MediumStyle, timeStyle:.MediumStyle)
 
-            titleLabel?.alpha = (entry?.unread == false) ? 0.5 : 1.0
-            dateLabel?.alpha = (entry?.unread == false) ? 0.5 : 1.0
+            titleLabel.alpha = (entry?.unread == false) ? 0.5 : 1.0
+            dateLabel.alpha = (entry?.unread == false) ? 0.5 : 1.0
         }
     }
 
