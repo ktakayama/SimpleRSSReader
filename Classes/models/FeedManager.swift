@@ -13,8 +13,8 @@ import RealmSwift
 
 final class FeedManager: NSObject {
 
-    typealias BulkProgress = (completedCount: Int, totalCount: Int)
     typealias FeedTask = Task<Void, Feed, NSError>
+    typealias BulkFeedTask = Task<FeedTask.BulkProgress, [Feed], NSError>
 
     static let sharedInstance: FeedManager = FeedManager()
 
@@ -46,8 +46,8 @@ final class FeedManager: NSObject {
         return FeedManager.sharedInstance.fetchFeed(feed)
     }
 
-    class func fetchAllFeeds() -> Task<BulkProgress, [Feed], NSError> {
-        let task = Task<BulkProgress, Results<Feed>, NSError> { progress, fulfill, reject, configure in
+    class func fetchAllFeeds() -> BulkFeedTask {
+        let task = Task<Void, Results<Feed>, NSError> { progress, fulfill, reject, configure in
             do {
                 let realm = try Realm()
                 fulfill(realm.objects(Feed))
@@ -56,7 +56,7 @@ final class FeedManager: NSObject {
             }
         }
 
-        return task.success { (feeds) -> Task<BulkProgress, [Feed], NSError> in
+        return task.success { (feeds) -> BulkFeedTask in
             var tasks: [FeedTask] = Array()
             for feed in feeds {
                 tasks.append(self.fetchFeed(feed))
