@@ -10,7 +10,7 @@ import XCTest
 import RealmSwift
 @testable import SimpleRSSReader
 
-class XMLFeedTransformerTests: XCTestCase {
+class XMLFeedTransformerTests: TestCaseBase {
 
     func testTransformAtom() {
         let path = NSBundle(forClass:self.dynamicType).pathForResource("test_sample_atom", ofType:"xml")

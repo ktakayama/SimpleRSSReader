@@ -11,7 +11,7 @@ import RealmSwift
 import SWXMLHash
 @testable import SimpleRSSReader
 
-class XMLFeedTransformerTransformAtomTests: XCTestCase {
+class XMLFeedTransformerTransformAtomTests: TestCaseBase {
 
     var xmlData: XMLIndexer {
         get {
