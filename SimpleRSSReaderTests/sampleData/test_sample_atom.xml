@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed version="0.3" xmlns="http://purl.org/atom/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="ja">
+<title>鷹の島のATOM</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/" />
+<modified>2013-07-01T14:38:34Z</modified>
+<tagline>FaviconizeTab出したりTrac本書いたりしました。最近はiPhoneアプリ開発ばかり。 要約はRSSで、全文はATOMで配信中</tagline>
+<id>tag:espion.just-size.jp,2006://1</id>
+<generator url="http://www.movabletype.org/" version="3.0D">Movable Type</generator>
+<copyright>Copyright (c) 2013, Kyosuke Takayama</copyright>
+<entry>
+<title>Kindlizer Backendを使ってニュースをKindleに配信</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/13/182001253.html" />
+<modified>2013-07-01T14:38:34Z</modified>
+<issued>2013-06-30T15:12:53Z</issued>
+<id>tag:espion.just-size.jp,2013://1.760</id>
+<created>2013-06-30T15:12:53Z</created>
+<summary type="text/plain">先日諸事情の人（なんのこっちゃ）が突然「最近、ネットのニュースは SmartNews からしか読んでないから意見が偏ってこのままだとネットイナゴになるから 日経電子版 とか他のやつも読もうと思うんだけどSmartNewsと同じような感じで快適に読めないかね」なんて言うから「日経のアプリ出てたはずだから使えばいいじゃん」って返したら「ウォール・ストリート・ジャーナル も読みたいから同じようなインターフェイスで読めると嬉しい」とかおっしゃいまして、特にオフラインで読めることを重視してらっしゃったようなので、そういえば ただのにっき で日経新聞のデータをKindleに送る仕組みを作ってたなと思ってそれを紹介してみたところ気に入って頂けたようなのでセットアップしてみました。 Kindle Paperwhite はもちろん、iPhoneのKindleアプリでも読めるのでなかなか快適です。 日経電子版をスクレイピングしてKindle向けmobiファイルを作る - ただのにっき(2011-01-04) Kindle向けニュース配信システムをHeroku上に移動した - ただのにっき(2012-03-04) Kindlizer-Backend ちなみに Calibre っていうソフトウェアを使っても似たようなことができるみたいで、しかもCalibreはGUIのアプリケーションだから使い始めるのも簡単そうなんだけど、ウォール・ストリート・ジャーナルの有料版に対応してるのか良くわかんなかったのと、Kindlier Backendを使ったほうが面白そうじゃんって思ったので不採用としました。 Kindlizer Backendは導入方法も書いてあるので、herokuを使ったことがあればすぐ使えると思います（そこが重要だけどｗ）。一個だけわかんなくて困ったのは、メールを配信するためにはSendGrid Starterていうアドオンのセットアップみたいなプロセスが必要なことでした。herokuでKindlizer Backend用に作ったアプリの管理画面にSendGrid Starterっていうのが出来てるので、それをクリックするとアカウントの情報が出てきて、なにやら承認的なボタンを押してくれよって感じになっていて、そこを進めないと使うことはできませんでした。どんな画面だったのかは忘れましたけど、とにかくそういうのがありました。 あと、nikkei-paidで有料版を読みたい場合、日経新聞のユーザ名やIDは環境変数で指定します。 $ heroku config:add NIKKEI_ID=[your id] NIKKEI_PW=[your pw] メール以外にもDropboxにファイルも転送できるようで、Dropboxでアプリを追加して各種キー類をこれまた環境変数で指定すると使えるようになりました。 Dropboxのキーを取得するのはやることが色々あって、最初に App Console からPlatformを「Core」にしてアプリを作ります。App...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>先日諸事情の人（なんのこっちゃ）が突然「最近、ネットのニュースは <a href="https://www.smartnews.be/">SmartNews</a> からしか読んでないから意見が偏ってこのままだとネットイナゴになるから <a href="http://www.nikkei.com/">日経電子版</a> とか他のやつも読もうと思うんだけどSmartNewsと同じような感じで快適に読めないかね」なんて言うから「日経のアプリ出てたはずだから使えばいいじゃん」って返したら「<a href="http://jp.wsj.com/home-page">ウォール・ストリート・ジャーナル</a> も読みたいから同じようなインターフェイスで読めると嬉しい」とかおっしゃいまして、特にオフラインで読めることを重視してらっしゃったようなので、そういえば <a href="http://sho.tdiary.net/">ただのにっき</a> で日経新聞のデータをKindleに送る仕組みを作ってたなと思ってそれを紹介してみたところ気に入って頂けたようなのでセットアップしてみました。</p>
+<p><a href="http://www.amazon.co.jp/Amazon-co-jp-53-000278-Kindle-Paperwhite/dp/B007OZO03M/webnotes-22/ref=sr_1_1?ie=UTF8&qid=1372605221&sr=8-1&keywords=Kindle+Paperwhite">Kindle Paperwhite</a> はもちろん、iPhoneのKindleアプリでも読めるのでなかなか快適です。</p>
+<ul >
+<li> <a href="http://sho.tdiary.net/20110104.html#p01">日経電子版をスクレイピングしてKindle向けmobiファイルを作る - ただのにっき(2011-01-04)</a></li>
+<li> <a href="http://sho.tdiary.net/20120304.html#p01">Kindle向けニュース配信システムをHeroku上に移動した - ただのにっき(2012-03-04)</a></li>
+<li> <a href="https://github.com/tdtds/kindlizer-backend">Kindlizer-Backend</a></li>
+</ul>
+<p>ちなみに <a href="http://calibre-ebook.com/">Calibre</a> っていうソフトウェアを使っても似たようなことができるみたいで、しかもCalibreはGUIのアプリケーションだから使い始めるのも簡単そうなんだけど、ウォール・ストリート・ジャーナルの有料版に対応してるのか良くわかんなかったのと、Kindlier Backendを使ったほうが<strong>面白そうじゃん</strong>って思ったので不採用としました。</p>
+<p>Kindlizer Backendは導入方法も書いてあるので、herokuを使ったことがあればすぐ使えると思います（そこが重要だけどｗ）。一個だけわかんなくて困ったのは、メールを配信するためにはSendGrid Starterていうアドオンのセットアップみたいなプロセスが必要なことでした。herokuでKindlizer Backend用に作ったアプリの管理画面にSendGrid Starterっていうのが出来てるので、それをクリックするとアカウントの情報が出てきて、なにやら承認的なボタンを押してくれよって感じになっていて、そこを進めないと使うことはできませんでした。どんな画面だったのかは忘れましたけど、とにかくそういうのがありました。</p>
+<p>あと、nikkei-paidで有料版を読みたい場合、日経新聞のユーザ名やIDは環境変数で指定します。</p>
+<pre>
+$ heroku config:add NIKKEI_ID=[your id] NIKKEI_PW=[your pw]
+</pre>
+<p>メール以外にもDropboxにファイルも転送できるようで、Dropboxでアプリを追加して各種キー類をこれまた環境変数で指定すると使えるようになりました。</p>
+<p>Dropboxのキーを取得するのはやることが色々あって、最初に <a href="https://www.dropbox.com/developers/apps">App Console</a> からPlatformを「Core」にしてアプリを作ります。App folderとFull Dropboxとありますけど、App folderを選択しました。Fullだとフルアクセスできるんで怖いよね…。ただし、App folderにすると lib/kindlizer/backend/task.rb のDropboxClientのインスタンスを作る部分のコードをいじる必要があります。</p>
+<pre>
+client = DropboxClient.new(session, :dropbox)
+↓
+client = DropboxClient.new(session, :app_folder)
+</pre>
+<p>アプリを作ったら、リクエスト用のトークンを取得します。以下のページのコードを使うと、リクエストトークンとアクセストークンと一通りの必要な情報を修得できます。</p>
+<ul >
+<li> <a href="http://face-do.blogspot.jp/2012/03/dropbox-automatordropboxherokutwitter.html">Ruby 開発備忘録: 自分用のdropbox automatorが作れる&#65281;dropbox&#65291;herokuでtwitterに写真を自動投稿する方法</a></li>
+</ul>
+<p>そんな感じでした。</p>
+<p>Kindlizer Backendを使ってる人ってどのくらいいるんですかね。これなかなか便利です。ウォール・ストリート・ジャーナル有料版もだいたいできて微調整してるところなので、もうちょっと様子を見たらフォークしてプルリクエストしようと思います。→ <a href="https://github.com/ktakayama/kindlizer-backend/tree/wsj-paid">しました</a></p>
+<p>スクレイピングするのは問題ないのか規約もチェックしてるんですけど、禁止されてる感じではないという印象かなあ…。このいうのは解釈が難しいですね。</p>
+<blockquote title="Info /   &#21033;&#29992;&#35215;&#32004; /    WSJ&#26085;&#26412;&#29256; - jp.WSJ.com - Wsj.com" cite="http://jp.wsj.com/public/page/jp-subscriber-agreement.html?mod=WSJ_JPFooter">
+<p>(iii) 私的利用の目的で本サービスの記事をダウンロード、保存及びアーカイブすることができます。会員は、私的利用の範囲内で数名の個人にアーカイブへのアクセ スを許すことは構いません。</p>
+<p><a href="http://jp.wsj.com/public/page/jp-subscriber-agreement.html?mod=WSJ_JPFooter">Info /   &#21033;&#29992;&#35215;&#32004; /    WSJ&#26085;&#26412;&#29256; - jp.WSJ.com - Wsj.com</a></p>
+</blockquote>]]>
+
+</content>
+</entry>
+<entry>
+<title>さくらVPSのデータのフルバックアップにCopyを使ってみる</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/13/175151913.html" />
+<modified>2013-07-11T12:02:52Z</modified>
+<issued>2013-06-24T06:19:13Z</issued>
+<id>tag:espion.just-size.jp,2013://1.759</id>
+<created>2013-06-24T06:19:13Z</created>
+<summary type="text/plain">最近 Copy っていう Dropbox ぽい感じのオンラインストレージが出てきましたけど、なかなか盛大に容量を割り振ってくれるので さくらのVPS のバックアップデータを収めるのに使ってみることにしました。 これまでは Mondo Rescue っていうのを使って定期的にイメージを生成して、適当なタイミングでダウンロードっていう運用でした。Mondo Rescue で作ったイメージを使うと、管理画面からそのまま復元できるらしいのでお手軽です。万一消えた時に再構築する手間がほとんどかからないっぽい雰囲気でステキですね。 でまあ「適当にダウンロード」と書いた通りに不定期で手元にダウンロードする運用だからわりと期間が空くわけでバックアップとしては微妙なんです。なので、せっかく容量が豊富な Copy をゲットしたので頼ってみることにしました。 まだ登録してない方はここからどうぞ！！ Copy 15GBに加えて、紹介者と双方に5GBのボーナスもらえますので20GB使えます。Twitterとリンクすると、さらに2GBもらえます！すげえ！ * バックアップに挑戦 さて、実際のバックアップですが、Copy の信頼性がいまひとつわからないので暗号化したデータを転送するようにしました。 EncFS という暗号化ファイルシステムがあるので、それを使います。今回環境構築するにあたって以下のページを参考にしました。 嗤うプログラマー: Google DriveやDropboxを暗号化して使う方法 Dropbox+encfsで暗号化したファイルをMacとUbuntu/Linuxで同期してみる (blog@browncat.org) バックアップの運用はこんな感じで考えています。 Copy の同期用ディレクトリは /drive/copy とする EncFS のルートディレクトリは /drive/copy/encfs とする 適当なところに上記ファイルシステムをマウントする...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>最近 <a href="https://copy.com?r=j2ON7f">Copy</a> っていう Dropbox ぽい感じのオンラインストレージが出てきましたけど、なかなか盛大に容量を割り振ってくれるので <a href="http://vps.sakura.ad.jp/">さくらのVPS</a> のバックアップデータを収めるのに使ってみることにしました。</p>
+<p>これまでは Mondo Rescue っていうのを使って定期的にイメージを生成して、適当なタイミングでダウンロードっていう運用でした。Mondo Rescue で作ったイメージを使うと、管理画面からそのまま復元できるらしいのでお手軽です。万一消えた時に再構築する手間がほとんどかからないっぽい雰囲気でステキですね。</p>
+<p>でまあ「適当にダウンロード」と書いた通りに不定期で手元にダウンロードする運用だからわりと期間が空くわけでバックアップとしては微妙なんです。なので、せっかく容量が豊富な Copy をゲットしたので頼ってみることにしました。</p>
+<p>まだ登録してない方はここからどうぞ！！</p>
+<ul >
+<li> <a href="https://copy.com?r=j2ON7f">Copy</a></li>
+</ul>
+<p>15GBに加えて、紹介者と双方に5GBのボーナスもらえますので20GB使えます。Twitterとリンクすると、さらに2GBもらえます！すげえ！</p>
+<h4 ><a href="http://espion.just-size.jp/archives/13/175151913.html#20e38390e38383e382afe382a2e38383e38397e381abe68c91e688a6" id="20e38390e38383e382afe382a2e38383e38397e381abe68c91e688a6" >*</a> バックアップに挑戦</h4>
+<p>さて、実際のバックアップですが、Copy の信頼性がいまひとつわからないので暗号化したデータを転送するようにしました。</p>
+<p>EncFS という暗号化ファイルシステムがあるので、それを使います。今回環境構築するにあたって以下のページを参考にしました。</p>
+<ul >
+<li> <a href="http://ict.matchy.net/2012/05/google-drivedropbox.html">嗤うプログラマー: Google DriveやDropboxを暗号化して使う方法</a></li>
+<li> <a href="http://blog.browncat.org/2008/09/dropboxencfsmaclinux.html">Dropbox+encfsで暗号化したファイルをMacとUbuntu/Linuxで同期してみる (blog@browncat.org)</a></li>
+</ul>
+<p>バックアップの運用はこんな感じで考えています。</p>
+<ul >
+<li> Copy の同期用ディレクトリは /drive/copy とする</li>
+<li> EncFS のルートディレクトリは /drive/copy/encfs とする</li>
+<li> 適当なところに上記ファイルシステムをマウントする → /mnt/encfs</li>
+<li> /home 以下のデータを rsync して /mnt/encfs/home 以下と同期する (1日数回)</li>
+<li> /home 以下を除いて Mondo Rescue でバックアップイメージを作成して /drive/mondo 以下に置く (1週間に1回程度)</li>
+<li> /drive/mondo にできあがった ISO イメージを splite で分割して rsync で /mnt/encfs/mondo 以下と同期する</li>
+</ul>
+<p>さくらでISOイメージを使って復元する場合、複数のイメージファイルは使えず、さらに5GBまでといったファイル制限があるという噂なので、/home とそれ以外とでバックアップを分けています。/home 以外は変更が少ないしそれほど重要でないのでこうしました。Copy では1つのファイルは1.5GBまでしか転送できないので、ISO イメージを作ったあとに分割します。</p>
+<p>うちは Ubuntu で運用してるので、必要なものは APT で入りました。</p>
+<pre>
+$ aptitude install mondo encfs
+</pre>
+<p>Copy の Linux 版をダウンロードしてきたら、実行してみます。x86 ディレクトリにバイナリがあるので、それを使いました。</p>
+<pre>
+$ sudo mkdir -p /drive/copy
+$ sudo ./CopyConsole -username=email@example.com -root=/drive/copy
+</pre>
+<p>多分パスワードを聞かれて同期が開始されることだと思います。適当なファイルを作って同期されるか確認してみましょう。ちなみにこれだとバックグラウンドで実行できないので、設定がうまくいったらデーモンモードで起動しましょう。</p>
+<pre>
+$ sudo ./CopyConsole -username=email@example.com -root=/drive/copy -daemon &amp;
+</pre>
+<p>次は EncFS をセットアップします。ルートディレクトリ・マウントポイントの順で指定します。</p>
+<pre>
+$ sudo encfs /drive/copy/encfs/ /mnt/encfs/
+ディレクトリ &quot;/drive/copy/encfs/&quot; が存在しません。作成しますか? (y,n) y
+ディレクトリ &quot;/mnt/encfs/&quot; が存在しません。作成しますか? (y,n) y
+新しい暗号化ボリュームを作成します。
+Please choose from one of the following options:
+ enter &quot;x&quot; for expert configuration mode,
+ enter &quot;p&quot; for pre-configured paranoia mode,
+ anything else, or an empty line will select standard mode.
+?&gt; 
+
+Standard configuration selected.
+
+設定が完了しました。以下のプロパティのファイルシステムが
+作成されます:
+ファイルシステム暗号アルゴリズム: &quot;ssl/aes&quot;, バージョン 2:2:1
+Filename encoding: &quot;nameio/block&quot;, version 3:0:1
+鍵サイズ: 192 ビット
+Block Size: 1024 bytes
+Each file contains 8 byte header with unique IV data.
+Filenames encoded using IV chaining mode.
+File holes passed through to ciphertext.
+
+Now you will need to enter a password for your filesystem.
+You will need to remember this password, as there is absolutely
+no recovery mechanism.  However, the password can be changed
+later using encfsctl.
+
+新しい Encfs パスワード: 
+Encfs パスワードの確認: 
+</pre>
+<p>適当なファイルを作ってみると、/drive/copy/encfs 内に自動的に暗号化されたファイルが生成されます。/drive/copy 以下は Copy の同期ディレクトリになっているので、自動的にサーバに転送されますね。これで準備完了です。</p>
+<pre>
+$ sudo touch /mnt/encfs/IhaveApen
+$ ls /drive/copy/encfs/
+.encfs6.xml  EI33ZIyxOCbSJ6cKmOizrWWg
+</pre>
+<p>ここまできたらあとはまあ適当なスクリプトなりなんなりを書いて、/mnt/encfs にファイルを突っ込むだけです。ホームディレクトリはこんな感じにしています。</p>
+<pre>
+#! /bin/sh
+
+if [ -x &quot;/mnt/encfs/home&quot; ]
+then
+   rsync -pa --delete /home /mnt/encfs
+fi
+</pre>
+<p>Mondo Rescue はこんな感じにしました。</p>
+<pre>
+#! /bin/sh
+
+BKDIR=/drive/mondo
+SyncDIR=/mnt/encfs
+
+if ! [ -x &quot;$SyncDIR/mondo&quot; ]
+then
+   exit
+fi
+
+rm -f ${BKDIR}/*
+mkdir -p $BKDIR
+mondoarchive -Oi -L -N -s 4200m -S /tmp -d $BKDIR -E &quot;/drive /home /mnt&quot;
+
+cd $BKDIR
+split --bytes 800m mondorescue-1.iso
+
+rsync -pa --exclude '*.iso' --delete $BKDIR $SyncDIR
+</pre>
+<p>データベース使ってる場合は、ダンプしたデータを /mnt/encfs 以下に定期的に出力するとより安心かもしれないですね。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>XUL/Migemo の Firefox20 対応</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/13/096000050.html" />
+<modified>2013-04-10T13:49:01Z</modified>
+<issued>2013-04-05T15:00:50Z</issued>
+<id>tag:espion.just-size.jp,2013://1.758</id>
+<created>2013-04-05T15:00:50Z</created>
+<summary type="text/plain"><![CDATA[XUL/Migemo にどっかで見つけたパッチあてて使えてたんだけど、先日 Firefox20 に更新したら動かなくなったので調べて解決しました。自動アップデートしちゃうので、バージョン番号を0.13.7にしてあります。updateURL 消せばいいのか。まいっか。 xulmigemo-0.13.7.xpi &lt;![CDATA[]]&gt; が使えなくなったのでその対応とか、検索バーの位置を変更する機能の一部が動いてない部分があったので消したり、辞書の初回ダウンロードとハイライトを動くようにしたくらいかな。自分はあんまり変わった設定で使ってなくてウェブページで migemo 検索できれば満足なので、他にも動いてない部分もあったりするかもしれませんごめんなさい。 オリジナルの 0.13.6 に以下の2つのパッチをあてて自分で作ることも可能です。 0.13.6 にあてた野良パッチ → xul_migemo-0.13.6mod4.diff 今回 Firefox20 用に作ったパッチ → xulmigemo-0.13.7.patch 全部できてコード公開しようかなと思った後に、なんと github に piro さんのコードが上がってるのを見つけてしまってビックリ。先に調べろって話だよね…。更新もされてるみたいなんだけど、make して出来上がった xpi ファイルを Firefox にインストールしようとしてもうまくいかなかったので、同じように困ってる方がいるかもしれないから自分のやつを公開した次第です。あとで github のやつも調べてうまいことやりたいな。 https://github.com/piroor/xulmigemo [2013.04.10追記] 上記 github のコードが動かなかったのは、Mac だったかららしくて修正してもらいました。xpi...]]></summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p><a href="https://addons.mozilla.org/ja/firefox/addon/xulmigemo/">XUL/Migemo</a> にどっかで見つけたパッチあてて使えてたんだけど、先日 Firefox20 に更新したら動かなくなったので調べて解決しました。自動アップデートしちゃうので、バージョン番号を0.13.7にしてあります。updateURL 消せばいいのか。まいっか。</p>
+<ul >
+<li> <a href="http://espion.just-size.jp/files/firefox/xulmigemo/xulmigemo-0.13.7.xpi">xulmigemo-0.13.7.xpi</a></li>
+</ul>
+<p>&lt;![CDATA[]]&gt; が使えなくなったのでその対応とか、検索バーの位置を変更する機能の一部が動いてない部分があったので消したり、辞書の初回ダウンロードとハイライトを動くようにしたくらいかな。自分はあんまり変わった設定で使ってなくてウェブページで migemo 検索できれば満足なので、他にも動いてない部分もあったりするかもしれませんごめんなさい。</p>
+<p>オリジナルの 0.13.6 に以下の2つのパッチをあてて自分で作ることも可能です。</p>
+<ul >
+<li> 0.13.6 にあてた野良パッチ → <a href="http://espion.just-size.jp/files/firefox/xulmigemo/xul_migemo-0.13.6mod4.diff">xul_migemo-0.13.6mod4.diff</a></li>
+<li> 今回 Firefox20 用に作ったパッチ → <a href="http://espion.just-size.jp/files/firefox/xulmigemo/xulmigemo-0.13.7.patch">xulmigemo-0.13.7.patch</a></li>
+</ul>
+<p>全部できてコード公開しようかなと思った後に、なんと github に piro さんのコードが上がってるのを見つけてしまってビックリ。先に調べろって話だよね…。更新もされてるみたいなんだけど、make して出来上がった xpi ファイルを Firefox にインストールしようとしてもうまくいかなかったので、同じように困ってる方がいるかもしれないから自分のやつを公開した次第です。あとで github のやつも調べてうまいことやりたいな。</p>
+<ul >
+<li> <a href="https://github.com/piroor/xulmigemo"  >https://github.com/piroor/xulmigemo</a></li>
+</ul>
+<p>[2013.04.10追記]</p>
+<p>上記 github のコードが動かなかったのは、Mac だったかららしくて修正してもらいました。xpi になったものは以下から取得できるようです。こっち使った方が良いと思います。</p>
+<ul >
+<li> <a href="http://piro.sakura.ne.jp/xul/xpi/nightly/"  >http://piro.sakura.ne.jp/xul/xpi/nightly/</a></li>
+</ul>]]>
+
+</content>
+</entry>
+<entry>
+<title>新しい MacBook を買ったときに入れてるソフトとか</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/12/172133412.html" />
+<modified>2012-06-20T04:42:07Z</modified>
+<issued>2012-06-20T04:34:12Z</issued>
+<id>tag:espion.just-size.jp,2012://1.757</id>
+<created>2012-06-20T04:34:12Z</created>
+<summary type="text/plain">MacBookAir 買いまして、新規にセットアップしたんでその時にインストールしたソフトとかもろもろ。 * ダウンロードしてくる 1Password - パスワードの管理 Dropbox Google日本語入力 Google chrome Firefox KeyRemap4Macbook - キーバインドのカスタマイズとキーリピートの変更 Better touch tool - トラックパッド便利にしてくれる iTerm MacVim VMWare Fusion iStat Menu - メニューバーにCPU利用率とか表示してくれる Skype GitX - gitのログ眺める用 * MacAppStore の購入履歴から再ダウンロード iPhoto Pixelmator Evernote SkyChatViewer -...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>MacBookAir 買いまして、新規にセットアップしたんでその時にインストールしたソフトとかもろもろ。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/12/172133412.html#20e38380e382a6e383b3e383ade383bce38389e38197e381a6e3818fe3828b" id="20e38380e382a6e383b3e383ade383bce38389e38197e381a6e3818fe3828b" >*</a> ダウンロードしてくる</h4>
+<ul >
+<li> <a href="https://agilebits.com/onepassword">1Password</a> - パスワードの管理</li>
+<li> <a href="https://www.dropbox.com/">Dropbox</a></li>
+<li> <a href="http://www.google.co.jp/ime/index-mac.html">Google日本語入力</a></li>
+<li> <a href="http://www.google.co.jp/chrome">Google chrome</a></li>
+<li> <a href="http://mozilla.jp/firefox/">Firefox</a></li>
+<li> <a href="http://pqrs.org/macosx/keyremap4macbook/index.html.ja">KeyRemap4Macbook</a> - キーバインドのカスタマイズとキーリピートの変更</li>
+<li> <a href="http://blog.boastr.net/?page_id=1722">Better touch tool</a> - トラックパッド便利にしてくれる</li>
+<li> <a href="http://www.iterm2.com/">iTerm</a></li>
+<li> <a href="http://code.google.com/p/macvim/">MacVim</a></li>
+<li> <a href="http://www.vmware.com/jp/products/desktop_virtualization/fusion/overview">VMWare Fusion</a></li>
+<li> <a href="http://bjango.com/mac/istatmenus/">iStat Menu</a> - メニューバーにCPU利用率とか表示してくれる</li>
+<li> <a href="http://www.skype.com/intl/ja/get-skype/">Skype</a></li>
+<li> <a href="http://gitx.frim.nl/">GitX</a> - gitのログ眺める用</li>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/12/172133412.html#20MacAppStore20e381aee8b3bce585a5e5b1a5e6adb4e3818be38289e5868de38380e382a6e383b3e383ade383bce38389" id="20MacAppStore20e381aee8b3bce585a5e5b1a5e6adb4e3818be38289e5868de38380e382a6e383b3e383ade383bce38389" >*</a> MacAppStore の購入履歴から再ダウンロード</h4>
+<ul >
+<li> iPhoto</li>
+<li> Pixelmator</li>
+<li> Evernote</li>
+<li> <a href="http://itunes.apple.com/jp/app/skychatviewer/id431062163?mt=12">SkyChatViewer</a> - Skypeのチャットログを見やすくしてくれる</li>
+<li> Janetter - Twitterクライアント</li>
+<li> <a href="http://itunes.apple.com/jp/app/dash-docs-snippets/id458034879?mt=12">Dash</a> - ドキュメントビューア</li>
+<li> Xcode</li>
+<li> Day One - 作業メモ書くのに使ってる</li>
+<li> <a href="http://itunes.apple.com/jp/app/receiptkeeper/id413449473?mt=12">ReceiptKeeper</a> - Suicaデータの管理に</li>
+<li> <a href="http://itunes.apple.com/jp/app/toucan-search/id427105394?mt=12">Toucan Search</a> - ファイル検索</li>
+<li> Growl</li>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/12/172133412.html#20e382b3e3839ee383b3e38389e383a9e382a4e383b3e6938de4bd9c" id="20e382b3e3839ee383b3e38389e383a9e382a4e383b3e6938de4bd9c" >*</a> コマンドライン操作</h4>
+<ul >
+<li> MobileTimeMachineをオフ（サブマシンの場合）</li>
+<ul >
+<li> sudo tmutil disablelocal</li>
+</ul>
+<li> 4本指でダブルタップすると直前のワークスペースへ移動</li>
+<ul >
+<li> defaults write com.apple.dock double-tap-jump-back -bool TRUE && killall Dock</li>
+</ul>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/12/172133412.html#20homebrew" id="20homebrew" >*</a> homebrew</h4>
+<ul >
+<li> 最初に Xcode を起動して、Preferences から Command Line Tools をインストールする</li>
+<li> homebrew のインストール実行</li>
+<ul >
+<li> /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"</li>
+</ul>
+<li> 入れるもの</li>
+<ul >
+<li> coreutils, colordiff, wget, lv, gnupg, imagemagick, tig</li>
+</ul>
+<li> screen の Formula をどっかからゲットしてきてインストールしたんだけど忘れた</li>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/12/172133412.html#20SSHe381aee68ea5e7b69ae3818ce98185e38184e381aee381a7e8a8ade5ae9ae38292e5a489e38188e3828b" id="20SSHe381aee68ea5e7b69ae3818ce98185e38184e381aee381a7e8a8ade5ae9ae38292e5a489e38188e3828b" >*</a> SSHの接続が遅いので設定を変える</h4>
+<p>ローカルネットワーク間でのSSH、具体的には MacBook 同士で接続開始するまでが長いので、以下の2つのファイルに設定を追加した</p>
+<ul >
+<li> /etc/ssh_config</li>
+<ul >
+<li> AddressFamily inet</li>
+</ul>
+<li> /etc/sshd_config</li>
+<ul >
+<li> UseDNS no</li>
+</ul>
+</ul>]]>
+
+</content>
+</entry>
+<entry>
+<title>ChainLP が便利すぎました</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/12/015232222.html" />
+<modified>2012-01-16T04:44:47Z</modified>
+<issued>2012-01-15T14:22:22Z</issued>
+<id>tag:espion.just-size.jp,2012://1.756</id>
+<created>2012-01-15T14:22:22Z</created>
+<summary type="text/plain">自炊した文庫本を Kindle で読むのに Kindlizer を使うとなかなか綺麗に仕上げてくれまして、ローカルで動かすには VMWare 内の Ubuntu で変換処理してたんだけど、純粋に Mac のみで動作させたいと思って Automator で動くようにとかして遊んでたところ、この界隈では結構有名な ChainLP を使ったことなかったので、どんなもんか試してみようと思って使ってみたらアラ大変。これはとんでもなく便利過ぎて鼻血でそうになりましたよもっと早く使うべきでした。 ChainLP なによりも便利だなと思ったのが、ノンブルを自動で認識して除去してくれる機能。Kindlizer の場合は自分でカットする領域を決めないといけないから、スティーブ・ジョブズ名語録 みたいに通常の本文が入るページと、合間に入るコラムでサイズが違うような場合に調整するのがめんどくさいということ。 ちなみにこんな感じです。左がコラムのページで右側が名言が書いてあるページ。 ChainLP だとカットする領域を自動で認識してくれるみたいでこういう悩みからは開放されそう。Windows なソフトなので、Mac のみで変換したいっていう願いは結局かなわないけど、5分もかからず変換できるほど早いしとにかく楽なのでむしろプラスだという事でここはひとつ。 というわけで色々と試してみて、設定は以下に落ち着いたのでメモ。 [本文ボールド可] なし [ガンマ補正] 2.0 [ヒストグラム] 0,180,235 [シャープネス] 2 「編集」→「詳細設定」→「ページ補正設定」 [ノンブル転送] なし あと、スキャンについては ScanSnap 使って以下の設定でやってます。 [画質]...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>自炊した文庫本を Kindle で読むのに <a href="https://github.com/tdtds/kindlizer/">Kindlizer</a> を使うとなかなか綺麗に仕上げてくれまして、ローカルで動かすには VMWare 内の Ubuntu で変換処理してたんだけど、純粋に Mac のみで動作させたいと思って Automator で動くようにとかして遊んでたところ、この界隈では結構有名な ChainLP を使ったことなかったので、どんなもんか試してみようと思って使ってみたらアラ大変。これはとんでもなく便利過ぎて鼻血でそうになりましたよもっと早く使うべきでした。</p>
+<ul >
+<li> <a href="http://no722.cocolog-nifty.com/blog/chainlp/">ChainLP</a></li>
+</ul>
+<p>なによりも便利だなと思ったのが、ノンブルを自動で認識して除去してくれる機能。Kindlizer の場合は自分でカットする領域を決めないといけないから、<a href="http://www.amazon.co.jp/dp/4569675204/webnotes-22/ref=nosim">スティーブ・ジョブズ名語録</a> みたいに通常の本文が入るページと、合間に入るコラムでサイズが違うような場合に調整するのがめんどくさいということ。</p>
+<p>ちなみにこんな感じです。左がコラムのページで右側が名言が書いてあるページ。</p>
+<p><img src="/files/images/20120116_0.png" width="200" height="160" alt="" /></p>
+<p>ChainLP だとカットする領域を自動で認識してくれるみたいでこういう悩みからは開放されそう。Windows なソフトなので、Mac のみで変換したいっていう願いは結局かなわないけど、5分もかからず変換できるほど早いしとにかく楽なのでむしろプラスだという事でここはひとつ。</p>
+<p>というわけで色々と試してみて、設定は以下に落ち着いたのでメモ。</p>
+<ul >
+<li> [本文ボールド可] なし</li>
+<li> [ガンマ補正] 2.0</li>
+<li> [ヒストグラム] 0,180,235</li>
+<li> [シャープネス] 2</li>
+<li> 「編集」→「詳細設定」→「ページ補正設定」 [ノンブル転送] なし</li>
+</ul>
+<p>あと、スキャンについては ScanSnap 使って以下の設定でやってます。</p>
+<ul >
+<li> [画質] スーパーファイン</li>
+<li> [カラーモード] グレー</li>
+<li> [オプション] 文字をくっきりのみオン</li>
+<li> [ファイル形式] PDF</li>
+<li> [ファイルサイズ] 3</li>
+</ul>
+<p>諸々やって Kindle に転送するとこんな感じ。参考までに <a href="http://a2k.aill.org/">青空キンドル</a> で変換したやつも。左がScanSnap+ChainLP、右が青空キンドル。とてもスキャンしたデータには見えないほど綺麗に描画されます。</p>
+<p><a href="/files/images/20120116_1l.png"><img src="/files/images/20120116_1.png" width="390" height="250" alt="" /></a></p>]]>
+
+</content>
+</entry>
+<entry>
+<title>青空キンドルの利用回数が60万回を超えてました</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/11/281183736.html" />
+<modified>2011-10-08T09:59:15Z</modified>
+<issued>2011-10-08T09:37:36Z</issued>
+<id>tag:espion.just-size.jp,2011://1.755</id>
+<created>2011-10-08T09:37:36Z</created>
+<summary type="text/plain">新型のKindle も出たことだし、長らく放置気味だった 青空キンドル のシステムを改修しました。青空文庫 も大分進化してて、注記の整理や新設が行なわれたので、そのあたりの対応がメインです。 そんでもって、ログとか見てたら思ったより利用者が多いんですよね。というわけで、前回の集計 からだいぶ経ってるし中途半端な数値ですが、改めて集計をしてみました。 2011.10.08 15:00現在 ログ取得期間: 675日 変換回数: 637,041回 一日平均: 944回/日 変換された作品の種類: 10,561冊 (ほとんど全部?!) まさか1日に1,000回近くダウンロードされるサービスになってるとは…。Sonyのとかiriverのやつとか、Kindleユーザ以外の方も結構いらっしゃるみたいですね。 2010年3月7日からは、独自のテキストを入力してPDF変換する機能も提供しているのですが、こちらは71,364回と、青空文庫の変換と比べて10%程度の利用数でした。1日の変換数は約123回ですが、慣れないと1回で満足な変換結果を得られないんでちょっと少なめに見た方がいい数値ではあります。それでも割りと多いような気がしますけどね。変換したいテキストとかって、そんなあるわけじゃないだろうし。 最後に、1000回以上変換された作品のランキングを載せておきますので、どんな作品を読めばいいか迷ったかたは参考にしてください。 5,640回 吾輩は猫である (夏目漱石) 5,449回 こころ (夏目漱石) 4,131回 坊っちゃん (夏目漱石) 3,512回 人間失格 (太宰治) 3,291回 ドグラ・マグラ (夢野久作) 3,046回 蟹工船 (小林多喜二) 2,979回...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p><a href="http://www.amazon.com/Kindle-eReader-eBook-Reader-e-Reader-Special-Offers/dp/B0051QVESA/">新型のKindle</a> も出たことだし、長らく放置気味だった <a href="http://a2k.aill.org/">青空キンドル</a> のシステムを改修しました。<a href="http://www.aozora.gr.jp/">青空文庫</a> も大分進化してて、注記の整理や新設が行なわれたので、そのあたりの対応がメインです。</p>
+<p>そんでもって、ログとか見てたら思ったより利用者が多いんですよね。というわけで、<a href="http://espion.just-size.jp/archives/10/027100857.html">前回の集計</a> からだいぶ経ってるし中途半端な数値ですが、改めて集計をしてみました。</p>
+<ul >
+<li> 2011.10.08 15:00現在</li>
+<li> ログ取得期間: 675日</li>
+<li> 変換回数: 637,041回</li>
+<li> 一日平均: 944回/日</li>
+<li> 変換された作品の種類: 10,561冊 (ほとんど全部?!)</li>
+</ul>
+<p>まさか1日に1,000回近くダウンロードされるサービスになってるとは…。Sonyのとかiriverのやつとか、Kindleユーザ以外の方も結構いらっしゃるみたいですね。</p>
+<p>2010年3月7日からは、独自のテキストを入力してPDF変換する機能も提供しているのですが、こちらは71,364回と、青空文庫の変換と比べて10%程度の利用数でした。1日の変換数は約123回ですが、慣れないと1回で満足な変換結果を得られないんでちょっと少なめに見た方がいい数値ではあります。それでも割りと多いような気がしますけどね。変換したいテキストとかって、そんなあるわけじゃないだろうし。</p>
+<p>最後に、1000回以上変換された作品のランキングを載せておきますので、どんな作品を読めばいいか迷ったかたは参考にしてください。</p>
+<ul >
+<li> 5,640回 <a href="http://www.aozora.gr.jp/cards/000148/card789.html">吾輩は猫である</a> (夏目漱石)</li>
+<li> 5,449回 <a href="http://www.aozora.gr.jp/cards/000148/card773.html">こころ</a> (夏目漱石)</li>
+<li> 4,131回 <a href="http://www.aozora.gr.jp/cards/000148/card752.html">坊っちゃん</a> (夏目漱石)</li>
+<li> 3,512回 <a href="http://www.aozora.gr.jp/cards/000035/card301.html">人間失格</a> (太宰治)</li>
+<li> 3,291回 <a href="http://www.aozora.gr.jp/cards/000096/card2093.html">ドグラ・マグラ</a> (夢野久作)</li>
+<li> 3,046回 <a href="http://www.aozora.gr.jp/cards/000156/card1465.html">蟹工船</a> (小林多喜二)</li>
+<li> 2,979回 <a href="http://www.aozora.gr.jp/cards/000148/card794.html">三四郎</a> (夏目漱石)</li>
+<li> 2,408回 <a href="http://www.aozora.gr.jp/cards/000148/card776.html">草枕</a> (夏目漱石)</li>
+<li> 2,256回 <a href="http://www.aozora.gr.jp/cards/000081/card456.html">銀河鉄道の夜 新潮文庫版</a> (宮沢賢治)</li>
+<li> 2,191回 <a href="http://www.aozora.gr.jp/cards/000148/card1746.html">それから</a> (夏目漱石)</li>
+<li> 2,118回 <a href="http://www.aozora.gr.jp/cards/000296/card47061.html">学問のすすめ</a> (福沢諭吉)</li>
+<li> 2,026回 <a href="http://www.aozora.gr.jp/cards/000879/card127.html">羅生門</a> (芥川竜之介)</li>
+<li> 1,978回 <a href="http://www.aozora.gr.jp/cards/000035/card2253.html">ヴィヨンの妻</a> (太宰治)</li>
+<li> 1,847回 <a href="http://www.aozora.gr.jp/cards/000311/card15979.html">親子一体の教育法</a> (宮本百合子)</li>
+<li> 1,805回 <a href="http://www.aozora.gr.jp/cards/000035/card1565.html">斜陽</a> (太宰治)</li>
+<li> 1,795回 <a href="http://www.aozora.gr.jp/cards/000035/card1567.html">走れメロス</a> (太宰治)</li>
+<li> 1,761回 <a href="http://www.aozora.gr.jp/cards/000125/card1317.html">黒死館殺人事件</a> (小栗虫太郎)</li>
+<li> 1,669回 <a href="http://www.aozora.gr.jp/cards/000081/card43737.html">銀河鉄道の夜 角川文庫版</a> (宮沢賢治)</li>
+<li> 1,649回 <a href="http://www.aozora.gr.jp/cards/000879/card92.html">蜘蛛の糸</a> (芥川竜之介)</li>
+<li> 1,556回 <a href="http://www.aozora.gr.jp/cards/000148/card761.html">虞美人草</a> (夏目漱石)</li>
+<li> 1,505回 <a href="http://www.aozora.gr.jp/cards/000148/card799.html">夢十夜</a> (夏目漱石)</li>
+<li> 1,396回 <a href="http://www.aozora.gr.jp/cards/000129/card2078.html">舞姫</a> (森鴎外)</li>
+<li> 1,294回 <a href="http://www.aozora.gr.jp/cards/000363/card42286.html">カラマゾフの兄弟</a> (ドストエフスキー)</li>
+<li> 1,287回 <a href="http://www.aozora.gr.jp/cards/000052/card5016.html">源氏物語</a> (紫式部)</li>
+<li> 1,259回 <a href="http://www.aozora.gr.jp/cards/001121/card46187.html">奇巌城</a> (モーリス・ルブラン)</li>
+<li> 1,259回 <a href="http://www.aozora.gr.jp/cards/000148/card785.html">門</a> (夏目漱石)</li>
+<li> 1,242回 <a href="http://www.aozora.gr.jp/cards/000119/card624.html">山月記</a> (中島敦)</li>
+<li> 1,237回 <a href="http://www.aozora.gr.jp/cards/000879/card19.html">或阿呆の一生</a> (芥川竜之介)</li>
+<li> 1,187回 <a href="http://www.aozora.gr.jp/cards/001124/card42934.html">阿Ｑ正伝</a> (魯迅)</li>
+<li> 1,159回 <a href="http://www.aozora.gr.jp/cards/000094/card882.html">アッシャー家の崩壊</a> (エドガー・アラン・ポー)</li>
+<li> 1,128回 <a href="http://www.aozora.gr.jp/cards/000081/card43754.html">注文の多い料理店</a> (宮沢賢治)</li>
+<li> 1,098回 <a href="http://www.aozora.gr.jp/cards/000879/card42.html">鼻</a> (芥川竜之介)</li>
+<li> 1,074回 <a href="http://www.aozora.gr.jp/cards/000081/card45630.html">〔雨ニモマケズ〕</a> (宮沢賢治)</li>
+<li> 1,065回 <a href="http://www.aozora.gr.jp/cards/000148/card782.html">明暗</a> (夏目漱石)</li>
+<li> 1,052回 <a href="http://www.aozora.gr.jp/cards/000094/card605.html">モルグ街の殺人事件</a> (エドガー・アラン・ポー)</li>
+<li> 1,042回 <a href="http://www.aozora.gr.jp/cards/000879/card69.html">河童</a> (芥川竜之介)</li>
+<li> 1,032回 <a href="http://www.aozora.gr.jp/cards/001234/card46340.html">ファラデーの伝</a> (愛知敬一)</li>
+</ul>
+<p>相変わらず夏目漱石の人気は圧倒的ですね。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>海外で盗難にあったiPhoneを保証してもらった件について</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/11/187210850.html" />
+<modified>2011-07-06T12:37:51Z</modified>
+<issued>2011-07-06T12:08:50Z</issued>
+<id>tag:espion.just-size.jp,2011://1.754</id>
+<created>2011-07-06T12:08:50Z</created>
+<summary type="text/plain">昨日書いたように サンフランシスコでiPhoneを失った わけですが、日本に帰ってきてカード会社の提携保険会社へ携行品損害の保険金を請求して結果が出たので、その時のことをまとめます。 ソフトバンクとかアップルのAppleCareとかでも何かしら(盗難は知らないけど)保証してくれるサービスがあるようですが、そういうのは一切加入してないのでここでは話題に出ません。 まずは、昨日の記事を読んでない方のために何が起きたか三行で説明しておきます。事前準備はこれでオーケー！ サンフランシスコで 見知らぬ人間に iPhoneをひったくられた さて、犯人が捕まるわけもないのでトボトボ日本に帰ってきました。しかしこんな時のために海外旅行保険がついてるクレジットカードを使っているので、さっそく請求してみようと思い立つわけです。今回お世話になったカードは JALカードSuica CLUB-A っていうやつ。1旅行で50万円までの携行品損害の保険がついてます。 保険の種類 が書いてあるページを見てると、資料についてはメンバーズルームって所で見れるらしいので、さっそく登録して確認。東京海上日動火災保険っていう会社に連絡するといいらしいので電話してみると、とても丁寧で感じのよい女性の方が担当してくれました。 ざっと事故の状況やらカード番号などを確認したら、必要書類を送ってくれるということ。特に問題なければ30日程度で支払われるらしい。お怪我はありませんでしたかとか、優しい言葉をかけて頂きました。 待つこと約一週間。封書が届きました。クレジットカード番号や事故の詳細、振込先口座や被害金額などを書いて、パスポートの入出国欄のコピーと、そして重要なのが事故証明書の添付。僕の場合は、サンフランシスコ警察の人にCase Numberっていう番号が書いたレポートを貰っていたので、それを添付しました。 さらに商品購入時の領収書が必要なのでこれも添付。今回被害にあったのは、iPhone4とそして一緒につけていたカバーです。iPhone4は一括払いで買っていたので、その時の領収書を。カバーの方は領収書を取っていなかったので、ダメ元でGmailに来てた購入確認メールを印刷して添付しました。せこい話ですが、やっぱり気に入って使ってた 浜崎あゆみのカバー だったので(笑) あとは、他に旅行保険付帯のクレジットカードを持っていたらその情報も必要ということで、それについてもカード番号を記入しておきました。ぐぐったら、自損分が賄われたりするらしいんですが、今のところいまいちハッキリしないので効果の程はわからず。 書類をまとめて、さっさと投函してさらに待つこと数日。事故受付の連絡という紙切れが一枚届きました。受付番号が発行されたので、問い合わせする場合はこれを使えばいいんでしょう。 そしてさらに待つこと数日…ついに「保険金お支払いのご案内」というハガキが届いてその日に振り込みが確認できました！やった！今夜は祝杯だ！ という感じですんなり行き過ぎてあまり語ることもないんですが、こんなところです。振り込みの金額は…携帯電話だと減価償却されるらしいですが、10%引かれていました。本体＋カバーの購入金額の90%が返ってきてとても嬉しいです。 * 時間軸 最初の連絡から2週間ちょっとで振り込まれました。思ったより速かったですね。最初に電話した以外は、特に直接話すことはなかったです。 6.11 被害にあう 6.13 夜に帰国 6.15 10:30 電話して状況説明 6.23 封筒届く、書類をまとめてすぐ返送 6.27 「事故受付のご連絡」到着 7.04 「保険金お支払いのご案内」到着＆振り込み確認(ハガキは6月30日付けになっていました)...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>昨日書いたように <a href="http://espion.just-size.jp/archives/11/186202950.html">サンフランシスコでiPhoneを失った</a> わけですが、日本に帰ってきてカード会社の提携保険会社へ携行品損害の保険金を請求して結果が出たので、その時のことをまとめます。</p>
+<p>ソフトバンクとかアップルのAppleCareとかでも何かしら(盗難は知らないけど)保証してくれるサービスがあるようですが、そういうのは一切加入してないのでここでは話題に出ません。</p>
+<p>まずは、昨日の記事を読んでない方のために何が起きたか三行で説明しておきます。事前準備はこれでオーケー！</p>
+<ul >
+<li> サンフランシスコで</li>
+<li> 見知らぬ人間に</li>
+<li> iPhoneをひったくられた</li>
+</ul>
+<p>さて、犯人が捕まるわけもないのでトボトボ日本に帰ってきました。しかしこんな時のために海外旅行保険がついてるクレジットカードを使っているので、さっそく請求してみようと思い立つわけです。今回お世話になったカードは <a href="http://www.jal.co.jp/jalcard/card/suica.html">JALカードSuica CLUB-A</a> っていうやつ。1旅行で50万円までの携行品損害の保険がついてます。</p>
+<p><a href="http://www.jal.co.jp/jalcard/function/travel_insurance.html">保険の種類</a> が書いてあるページを見てると、資料についてはメンバーズルームって所で見れるらしいので、さっそく登録して確認。東京海上日動火災保険っていう会社に連絡するといいらしいので電話してみると、とても丁寧で感じのよい女性の方が担当してくれました。</p>
+<p>ざっと事故の状況やらカード番号などを確認したら、必要書類を送ってくれるということ。特に問題なければ30日程度で支払われるらしい。お怪我はありませんでしたかとか、優しい言葉をかけて頂きました。</p>
+<p><a href="/files/images/20110706_0l.png"><img class="photo" src="/files/images/20110706_0.png" width="240" height="320" alt="Case Number" /></a></p>
+<p>待つこと約一週間。封書が届きました。クレジットカード番号や事故の詳細、振込先口座や被害金額などを書いて、パスポートの入出国欄のコピーと、そして重要なのが<strong>事故証明書</strong>の添付。僕の場合は、サンフランシスコ警察の人にCase Numberっていう番号が書いたレポートを貰っていたので、それを添付しました。</p>
+<p>さらに商品購入時の領収書が必要なのでこれも添付。今回被害にあったのは、iPhone4とそして一緒につけていたカバーです。iPhone4は一括払いで買っていたので、その時の領収書を。カバーの方は領収書を取っていなかったので、ダメ元でGmailに来てた購入確認メールを印刷して添付しました。せこい話ですが、やっぱり気に入って使ってた <a href="http://www.softbankselection.jp/onlineshop/product/detail/003291.html">浜崎あゆみのカバー</a> だったので(笑)</p>
+<p>あとは、他に旅行保険付帯のクレジットカードを持っていたらその情報も必要ということで、それについてもカード番号を記入しておきました。ぐぐったら、自損分が賄われたりするらしいんですが、今のところいまいちハッキリしないので効果の程はわからず。</p>
+<p>書類をまとめて、さっさと投函してさらに待つこと数日。事故受付の連絡という紙切れが一枚届きました。受付番号が発行されたので、問い合わせする場合はこれを使えばいいんでしょう。</p>
+<p>そしてさらに待つこと数日…ついに「保険金お支払いのご案内」というハガキが届いてその日に振り込みが確認できました！やった！今夜は祝杯だ！</p>
+<p>という感じですんなり行き過ぎてあまり語ることもないんですが、こんなところです。振り込みの金額は…携帯電話だと減価償却されるらしいですが、10%引かれていました。本体＋カバーの購入金額の90%が返ってきてとても嬉しいです。<br clear="all" /></p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/187210850.html#20e69982e99693e8bbb8" id="20e69982e99693e8bbb8" >*</a> 時間軸</h4>
+<p>最初の連絡から2週間ちょっとで振り込まれました。思ったより速かったですね。最初に電話した以外は、特に直接話すことはなかったです。</p>
+<ul >
+<li> 6.11 被害にあう</li>
+<li> 6.13 夜に帰国</li>
+<li> 6.15 10:30 電話して状況説明</li>
+<li> 6.23 封筒届く、書類をまとめてすぐ返送</li>
+<li> 6.27 「事故受付のご連絡」到着</li>
+<li> 7.04 「保険金お支払いのご案内」到着＆振り込み確認(ハガキは6月30日付けになっていました)</li>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/11/187210850.html#20e6b097e381abe381aae381a3e3819fe38193e381a8e381a8e3818b" id="20e6b097e381abe381aae381a3e3819fe38193e381a8e381a8e3818b" >*</a> 気になったこととか</h4>
+<ul >
+<li> 警察から事故証明書をもらう必要があるでしょう</li>
+<li> 現地で警察に被害を説明する時にカバーをしてるかとか聞かれたんで、カバーの代金も支払われたんじゃないかなと思ってます</li>
+<li> 現地で被害金額について話していたときに、iPhone4 32GBの現地での金額$299とかメモに取ってたので、そこが気になってましたが、普通に日本の領収書通りに支払われました</li>
+<li> iPhoneを分割払いで買ってたらどうなるんでしょうかね、めんどくさそうだ、だから一括で買うといい</li>
+</ul>
+<div style="margin-left:2em;">
+<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=180057952055805&amp;xfbml=1"></script><fb:like href="http://espion.just-size.jp/archives/11/187210850.html" send="true" layout="button_count" width="450" show_faces="false" font=""></fb:like>
+</div>]]>
+
+</content>
+</entry>
+<entry>
+<title>サンフランシスコでiPhoneの盗難にあった件について</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/11/186202950.html" />
+<modified>2011-07-06T12:24:24Z</modified>
+<issued>2011-07-05T11:29:50Z</issued>
+<id>tag:espion.just-size.jp,2011://1.753</id>
+<created>2011-07-05T11:29:50Z</created>
+<summary type="text/plain"><![CDATA[もう1ヶ月ほど前になりますが、WWDC のために訪れていたサンフランシスコでiPhoneの盗難というか強奪という大変な事件が起きたので、その時にやったこととかをまとめます。 6月11日土曜日14:20分頃のことです。ユニオンスクエアのAppleStoreの近くでiPhoneを構えて写真撮影をしていたところ、死角からこうガバッとiPhoneを捕まれて、犯人のお兄さんはそのまま地下鉄のほうへ逃げてゆかれました。頑張って追いかけてみましたが、本職の泥棒に適うわけもなく、まんまと逃げられてしまいました。 行ったことある人はわかると思いますが、あの辺は人も割と多くてね、完璧油断してました。どんな感じかは ストリートビュー をご覧いただくとなんか想像つくかも。 幸いなことに、追いかけっこを目撃していた女性の方が鉄道警察に通報してくれて、すぐにBart(あっちの地下鉄)の警備員さんが来てくれました。事件発生現場は地上だったので管轄が違うらしく、サンフランシスコ警察を呼んでくれたりとか、俺英語あんまりしゃべれないから日本語わかる人探してくれて、何故かAppleStoreの従業員の方が出てきたりとかのイベントがあったんだけど、まあどうでもいいんで割愛。 残念ながらFind My iPhoneは使ってないので、その辺りの探索体験できませんでした。どっちにしろすぐ電源切ってたっぽいんですけどね。なんかどうも盗難事件が多発していたらしいんですよ。自分の場合は触れられてすらいないので、怪我も何もなく無事に日本に帰ってきました。 会場前の行列ではiPhoneを使わないに警察から指示が。 というのもiPhoneの盗難が多発しているとのこと。たんにひったくられるだけじゃなく、ひどい場合は通話中に殴られて奪われるパターンもあった様子。&gt;&lt; WDC2011のビアバッシュはベストコンサートだった #wwdc - Drift Diary XIII で、ケーサツの方に名前やら連絡先やらを聞かれて解散したところで本題の、この後なにをやったか。 まずはソフトバンクへ電話して電話回線を止めてもらう。海外専用窓口に電話して、電話番号と名前とパスワードですぐ止めてくれました。 海外で携帯電話を盗難・紛失した場合、どうしたらいいですか？ 電話でのお問い合わせ窓口 | SoftBank そしてiPhoneの対応。iPhoneにはパスコードロックをかけていましたが、未操作のあと何分後(1時間かな)みたいな設定だったので、念のためiPhoneからアクセスできるウェブサービスのパスワードなどを変更していきました。手元にiPod touchが複数台あったため、色々状況をシミュレートしながら設定変更をためすことができ、なかなか興味深い結果になったので、代表的なサービスについて、各アカウントで行なった対策とその結果どうなるかをまとめました。 * Google (Gmail, Calendar) Googleのアカウントには「他のセッションをログアウト」という項目があるので、パスワードを変更してからこれを選択することで、iPhoneの「メール」アプリからのアクセスをシャットアウトできます。ただ普通にキャッシュは残ってるだろうから、最近見たメールなんかは読まれる可能性はありますね。 カレンダーは個人的に「CalenGoo」というアプリを使っていますが、オフラインの状態では取得済の予定はすべて見れます。オンラインになると、自動的にログイン画面に戻ったので、新しい予定は表示できなくなります。他のアプリでは試していないのでわかりません。 Gmailには「アカウントのアクティビティ」という画面で利用IPアドレスの履歴を表示できます。これを見ると不正アクセスがあったかどうかすぐわかります。あまり使ってないアカウントがあれば、そのアカウントのパスワードを変更しないでおくというのも手かなとか思いました。実際に不正アクセスが発生したかどうかを確認出来る可能性がぐっと上がります。 * Twitter 最初にパスワードを変更し、次にアプリケーションの接続を遮断します。 iPhoneのTwitterクライアントはOAuth/XAuthで認証を行なっているので、基本的にパスワードを変更したとしてもアカウント情報へのアクセスは可能です。http://twitter.com/settings/applications にアクセスして、表示されるアプリケーションを一通りremoveしていくと、これらの接続を切ることができます。これで、いままで使っていたiPhoneから不正にアクセスされることはなくなります。 ほとんどのクライアントは、オンラインだろうがオフラインだろうがアクセスができなかった場合にその旨のアラートを表示するだけなので、過去に表示したDMなどは見えてしまいます。これは防ぎようがありませんので、秘密情報が含まれていないかは十分確認したほうがいいでしょう。使ってるアカウント名ももろに表示されてしまうので、監視される可能性も考慮して、少しの間だけつぶやきは非公開にしておきました。 新しいiPhoneなどを入手したあと、クライアントアプリで改めて認証をした場合、OAuth/XAuthのトークンが新しくなるので盗難iPhoneからアクセスされる心配はありません。...]]></summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>もう1ヶ月ほど前になりますが、<a href="http://developer.apple.com/wwdc/">WWDC</a> のために訪れていたサンフランシスコでiPhoneの盗難というか強奪という大変な事件が起きたので、その時にやったこととかをまとめます。</p>
+<p>6月11日土曜日14:20分頃のことです。ユニオンスクエアのAppleStoreの近くでiPhoneを構えて写真撮影をしていたところ、死角からこうガバッとiPhoneを捕まれて、犯人のお兄さんはそのまま地下鉄のほうへ逃げてゆかれました。頑張って追いかけてみましたが、本職の泥棒に適うわけもなく、まんまと逃げられてしまいました。</p>
+<p>行ったことある人はわかると思いますが、あの辺は人も割と多くてね、完璧油断してました。どんな感じかは <a href="http://maps.google.com/maps?hl=ja&ll=37.785707,-122.406693&spn=0.001365,0.002811&sll=35.524624,139.627919&sspn=0.044637,0.057249&t=h&z=19&layer=c&cbll=37.785707,-122.406181&cbp=12,0,,0,0&photoid=po-38026034">ストリートビュー</a> をご覧いただくとなんか想像つくかも。</p>
+<p>幸いなことに、追いかけっこを目撃していた女性の方が鉄道警察に通報してくれて、すぐにBart(あっちの地下鉄)の警備員さんが来てくれました。事件発生現場は地上だったので管轄が違うらしく、サンフランシスコ警察を呼んでくれたりとか、俺英語あんまりしゃべれないから日本語わかる人探してくれて、何故かAppleStoreの従業員の方が出てきたりとかのイベントがあったんだけど、まあどうでもいいんで割愛。</p>
+<p>残念ながらFind My iPhoneは使ってないので、その辺りの探索体験できませんでした。どっちにしろすぐ電源切ってたっぽいんですけどね。なんかどうも盗難事件が多発していたらしいんですよ。自分の場合は触れられてすらいないので、怪我も何もなく無事に日本に帰ってきました。</p>
+<blockquote title="WDC2011のビアバッシュはベストコンサートだった #wwdc - Drift Diary XIII" cite="http://blog.drikin.com/2011/06/beerbash.html">
+<p>会場前の行列ではiPhoneを使わないに警察から指示が。</p>
+<p>というのもiPhoneの盗難が多発しているとのこと。たんにひったくられるだけじゃなく、ひどい場合は通話中に殴られて奪われるパターンもあった様子。&gt;&lt;</p>
+<p><a href="http://blog.drikin.com/2011/06/beerbash.html">WDC2011のビアバッシュはベストコンサートだった #wwdc - Drift Diary XIII</a></p>
+</blockquote>
+<p>で、ケーサツの方に名前やら連絡先やらを聞かれて解散したところで本題の、この後なにをやったか。</p>
+<p>まずはソフトバンクへ電話して電話回線を止めてもらう。海外専用窓口に電話して、電話番号と名前とパスワードですぐ止めてくれました。</p>
+<ul >
+<li> <a href="http://faq.mb.softbank.jp/detail.aspx?id=e426b4c5945744e6e55684e72694f5a45514177776a665a366b4a6d5041623335386d35784968514b3853303d">海外で携帯電話を盗難・紛失した場合、どうしたらいいですか？</a></li>
+<li> <a href="http://mb.softbank.jp/mb/support/3G/contact/voice_information/">電話でのお問い合わせ窓口 | SoftBank</a></li>
+</ul>
+<p>そしてiPhoneの対応。iPhoneにはパスコードロックをかけていましたが、未操作のあと何分後(1時間かな)みたいな設定だったので、念のためiPhoneからアクセスできるウェブサービスのパスワードなどを変更していきました。手元にiPod touchが複数台あったため、色々状況をシミュレートしながら設定変更をためすことができ、なかなか興味深い結果になったので、代表的なサービスについて、各アカウントで行なった対策とその結果どうなるかをまとめました。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20Google2028Gmail2c20Calendar29" id="20Google2028Gmail2c20Calendar29" >*</a> Google (Gmail, Calendar)</h4>
+<p>Googleのアカウントには「他のセッションをログアウト」という項目があるので、パスワードを変更してからこれを選択することで、iPhoneの「メール」アプリからのアクセスをシャットアウトできます。ただ普通にキャッシュは残ってるだろうから、最近見たメールなんかは読まれる可能性はありますね。</p>
+<p>カレンダーは個人的に「CalenGoo」というアプリを使っていますが、オフラインの状態では取得済の予定はすべて見れます。オンラインになると、自動的にログイン画面に戻ったので、新しい予定は表示できなくなります。他のアプリでは試していないのでわかりません。</p>
+<p>Gmailには「アカウントのアクティビティ」という画面で利用IPアドレスの履歴を表示できます。これを見ると不正アクセスがあったかどうかすぐわかります。あまり使ってないアカウントがあれば、そのアカウントのパスワードを変更しないでおくというのも手かなとか思いました。実際に不正アクセスが発生したかどうかを確認出来る可能性がぐっと上がります。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20Twitter" id="20Twitter" >*</a> Twitter</h4>
+<p>最初にパスワードを変更し、次にアプリケーションの接続を遮断します。</p>
+<p>iPhoneのTwitterクライアントはOAuth/XAuthで認証を行なっているので、基本的にパスワードを変更したとしてもアカウント情報へのアクセスは可能です。<a href="http://twitter.com/settings/applications"  >http://twitter.com/settings/applications</a> にアクセスして、表示されるアプリケーションを一通りremoveしていくと、これらの接続を切ることができます。これで、いままで使っていたiPhoneから不正にアクセスされることはなくなります。</p>
+<p>ほとんどのクライアントは、オンラインだろうがオフラインだろうがアクセスができなかった場合にその旨のアラートを表示するだけなので、過去に表示したDMなどは見えてしまいます。これは防ぎようがありませんので、秘密情報が含まれていないかは十分確認したほうがいいでしょう。使ってるアカウント名ももろに表示されてしまうので、監視される可能性も考慮して、少しの間だけつぶやきは非公開にしておきました。</p>
+<p>新しいiPhoneなどを入手したあと、クライアントアプリで改めて認証をした場合、OAuth/XAuthのトークンが新しくなるので盗難iPhoneからアクセスされる心配はありません。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20Facebook" id="20Facebook" >*</a> Facebook</h4>
+<p>Facebookのパスワードを変更すると、iPhoneアプリは自動的にログアウトされて強制的にログイン画面に戻ります。すばらしいアプリです。オフラインだとほとんど操作できないので、Facebookは早々に安全だと判断できました。</p>
+<p>ただし、Facebookのコネクションを利用してログインするタイプのアプリの場合は、そうはいきません。たとえばBelugaです。</p>
+<p>Belugaのログイン認証は端末毎にセッションを作っているようなので、どこかでログアウトをしても他の端末には影響がありません。Podを見れないようにするためにLeave Podを実行すると、Leaveを実行した端末とWebからは該当のpodへアクセスできなくなります。が、すでにログを表示済の端末、つまり紛失した端末上では過去ログの参照ができてしまいます（投稿はできません）。当然新しいPodを作るとすべての端末に内容が同期されます。アカウント消すこともできないし、なんかどうしようもないっぽいのでひとまずBelugaを使のはやめにしました。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20Dropbox" id="20Dropbox" >*</a> Dropbox</h4>
+<p>パスワードを変更した上で、端末毎のリンクを解除します。</p>
+<p>リンクを解除された端末でDropboxアプリを立ち上げると、パスワード入力のプロンプトが表示されます。ただし、このプロンプトをキャンセルしてファイルにアクセスすることが可能です。じっくり検証したわけではりませんが、キャッシュされているファイルは表示できるようです。</p>
+<p>サードパーティ製のアプリケーションとの接続を切る機能がありますが、これを実行してもすでに認証済のアプリケーションには影響がないようです。</p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20e697a5e69cace381abe5b8b0e381a3e381a6e3818de381a6" id="20e697a5e69cace381abe5b8b0e381a3e381a6e3818de381a6" >*</a> 日本に帰ってきて</h4>
+<p>前に使っていたiPhone3GSを持っているので、これをソフトバンクショップに持っていったところ、機種変更の扱いでSIMを発行してもらえました。約2000円の事務手数料のみです。</p>
+<p>出発前に取っていたバックアップから復元したので、データ的な損害は大したことありませんでした。</p>
+<p>海外旅行保険はいつも入ってません。クレジットカード付帯の盗難保険がついてるので、そこに保険金の請求をします。というか、請求してもうすでに振り込まれました。これについては後日まとめます。→ まとめました <a href="/archives/11/187210850.html">海外で盗難にあったiPhoneを保証してもらった件について</a></p>
+<h4 ><a href="http://espion.just-size.jp/archives/11/186202950.html#20e381bee381a8e38281" id="20e381bee381a8e38281" >*</a> まとめ</h4>
+<p>実際、データの盗難が目的だったらパスコードロックかかってない時点でほぼ死亡なのよね。いまのところ不正にアクセスされた形跡はないので本当に良かった。</p>
+<p>必要なこと</p>
+<ul >
+<li> こまめなバックアップ</li>
+<li> パスコードロックのパスコード要求間隔は短めに</li>
+<li> パスコード10回した場合の「データ消去」はオンにした方がいいでしょう</li>
+<li> 外出先でiPhoneを出さない</li>
+</ul>
+<p>あと、開発者として気付いたこと</p>
+<ul >
+<li> パスワードを変更したら、そのユーザのセッションは全部切る</li>
+<li> Gmailのような、他のセッション全部切ってくださいオプションは安心</li>
+<li> Belugaみたいなサービスでも、アカウントの関連付けを切る機能は必要</li>
+</ul>]]>
+
+</content>
+</entry>
+<entry>
+<title>色々と新しいタブで開くFirefox用拡張 * OreTab</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/11/059230434.html" />
+<modified>2014-03-27T07:07:01Z</modified>
+<issued>2011-02-28T14:04:34Z</issued>
+<id>tag:espion.just-size.jp,2011://1.752</id>
+<created>2011-02-28T14:04:34Z</created>
+<summary type="text/plain">以前公開していたオレ専用タブ拡張 OreTab の Firefox10.0〜Firefox16.0 に対応したバージョンです。機能は一緒。下位互換性がなくなったので、また新しいページです。 oretab-28.0.0.xpi Source code repository (github) 過去のバージョンなど...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+<dc:subject>Dist Firefox</dc:subject>
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>以前公開していたオレ専用タブ拡張 <a href="/archives/09/181191625.html">OreTab</a> の Firefox10.0〜Firefox16.0 に対応したバージョンです。機能は一緒。下位互換性がなくなったので、また新しいページです。</p>
+<ul >
+<li> <a href="/files/firefox/extensions/oretab-28.0.0.xpi">oretab-28.0.0.xpi</a></li>
+<li> <a href="http://github.com/ktakayama/oretab/tree">Source code repository</a> (github)</li>
+<li> <a href="/files/firefox/extensions/">過去のバージョンなど</a></li>
+</ul>]]>
+<![CDATA[<h4 ><a href="http://espion.just-size.jp/archives/11/059230434.html#20e6a99fe883bde4b880e8a6a7" id="20e6a99fe883bde4b880e8a6a7" >*</a> 機能一覧</h4>
+<h5 ><a href="http://espion.just-size.jp/archives/11/059230434.html#20e696b0e8a68fe382bfe38396e381aae6a99fe883bd" id="20e696b0e8a68fe382bfe38396e381aae6a99fe883bd" >*</a> 新規タブな機能</h5>
+<ul >
+<li> ブックマークを新規タブで開く</li>
+<li> 履歴を新規タブで開く</li>
+<li> サイドバー(ブックマークと履歴)のリンクを新規タブで開く</li>
+</ul>
+<p>ミドルクリックすれば、従来通りにカレントタブで開きます。</p>
+<h5 ><a href="http://espion.just-size.jp/archives/11/059230434.html#20e4bb96e381aee381a1e38287e381a3e381a8e38197e3819fe6a99fe883bd" id="20e4bb96e381aee381a1e38287e381a3e381a8e38197e3819fe6a99fe883bd" >*</a> 他のちょっとした機能</h5>
+<ul >
+<li> タブをクリックすると直前にフォーカスしていたタブに移動する</li>
+<li> タブを閉じると直前にフォーカスしていたタブに移動する</li>
+<li> 新規タブはカレントタブのすぐ右側に追加される</li>
+</ul>
+<h4 ><a href="http://espion.just-size.jp/archives/11/059230434.html#20e383a1e383a2" id="20e383a1e383a2" >*</a> メモ</h4>
+<p>oretab.xul をいじって以下の js ファイルを読み込まないようにすれば、要らない機能が省けます。</p>
+<dl >
+<dt >tab.js</dt>
+<dd > ブックマークとか履歴とかを新しいタブで開くやつ</dd>
+<dt >focus.js</dt>
+<dd > タブを閉じたりクリックした時にフォーカスされるやつ</dd>
+<dt >gbrowser.js</dt>
+<dd > 新しいタブをアクティブタブのすぐ右側に表示するやつ</dd>
+</dl>
+<h4 ><a href="http://espion.just-size.jp/archives/11/059230434.html#20e4b8bbe381aae5a489e69bb4e5b1a5e6adb4" id="20e4b8bbe381aae5a489e69bb4e5b1a5e6adb4" >*</a> 主な変更履歴</h4>
+<dl >
+<dt >2014-03-27 ver.28.0.0</dt>
+<dd >Firefox28.0 対応</dd>
+<dt >2012-10-11 ver.16.0.0</dt>
+<dd >Firefox16.0 対応</dd>
+<dt >2012-02-20 ver.10.0.0</dt>
+<dd >Firefox10.0 対応</dd>
+<dt >2011-11-09 ver.4.0.2</dt>
+<dd >Firefox9.0 対応</dd>
+<dt >2011-08-03 ver.4.0.1</dt>
+<dd >Firefox7.0 対応</dd>
+<dt >2011-02-28 ver.4.0.0</dt>
+<dd >Firefox4.0 対応</dd>
+</dl>]]>
+</content>
+</entry>
+<entry>
+<title>ダイヤモンド社からダイヤモンドブックスというアプリをリリースしました</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/355201739.html" />
+<modified>2010-12-21T11:25:22Z</modified>
+<issued>2010-12-21T11:17:39Z</issued>
+<id>tag:espion.just-size.jp,2010://1.751</id>
+<created>2010-12-21T11:17:39Z</created>
+<summary type="text/plain">書店型の電子書籍アプリケーション、ダイヤモンドブックスがリリースとなりました。 ダイヤモンド社の電子書籍が手軽に読める、iPhone/iPad 向けのアプリケーションです。 http://diamond.jp/e-books/201012-dbooks/index.html 上のサイトの動画とか良く出来ていて、一通りの使い方やらを体験できます。使ってみたくなりますね。アプリのアイコンも結構おもしろく、なんていうか立体的なんですよ。3Dなアイコンはあまり見かけないので、目をひきます。 とまあ、宣伝だけだと残念な感じなので、これってどのくらいの期間で作ったのか？っていうのに興味ある方もいらっしゃるかもしれないので、ちょっと書いてみます。 確か8月くらいからダイヤモンド社の電子書籍チームのみなさんとデザインを考えはじめて、あーだこーだこうなってないとおかしいやらなんやら言いあって、だいたい9月頭頃からプログラムを触りはじめました。 約1ヶ月でiPhone版のプロトタイプがほぼ出来上がって、そのままiPad対応のユニバーサル化へ。ユニバーサル化は予想より大分時間がかかった感じだけど、2週間強でほぼiPhoneと同じように動くように。 その後、課金サービス(これは外部のASPサービスを利用)の方で機能を追加してもらったり、試し読みとか絶対無いと不便だよね〜、と機能を追加したり、ブラッシュアップを重ねて12月の頭に申請して20日にリリースとなりましたとさ。 いまは機能追加とかは少し休んでますが、落ち着いたらさらなるバージョンアップへ向けて動き出します。いろいろ要望もたまってますしね。昨日は、電子書籍の有名人(?)とも会ったりして楽しい話を聞けたりしました。色々コラボ出来たりすると面白いよなあとか思いながら、来年へ向けてこの勢いを衰えさせないように頑張っていきたいと思います。...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>書店型の電子書籍アプリケーション、ダイヤモンドブックスがリリースとなりました。</p>
+<p>ダイヤモンド社の電子書籍が手軽に読める、iPhone/iPad 向けのアプリケーションです。</p>
+<ul >
+<li> <a href="http://diamond.jp/e-books/201012-dbooks/index.html"  >http://diamond.jp/e-books/201012-dbooks/index.html</a></li>
+</ul>
+<p>上のサイトの動画とか良く出来ていて、一通りの使い方やらを体験できます。使ってみたくなりますね。アプリのアイコンも結構おもしろく、なんていうか立体的なんですよ。3Dなアイコンはあまり見かけないので、目をひきます。</p>
+<p>とまあ、宣伝だけだと残念な感じなので、これってどのくらいの期間で作ったのか？っていうのに興味ある方もいらっしゃるかもしれないので、ちょっと書いてみます。</p>
+<p>確か8月くらいからダイヤモンド社の電子書籍チームのみなさんとデザインを考えはじめて、あーだこーだこうなってないとおかしいやらなんやら言いあって、だいたい9月頭頃からプログラムを触りはじめました。</p>
+<p>約1ヶ月でiPhone版のプロトタイプがほぼ出来上がって、そのままiPad対応のユニバーサル化へ。ユニバーサル化は予想より大分時間がかかった感じだけど、2週間強でほぼiPhoneと同じように動くように。</p>
+<p>その後、課金サービス(これは外部のASPサービスを利用)の方で機能を追加してもらったり、試し読みとか絶対無いと不便だよね〜、と機能を追加したり、ブラッシュアップを重ねて12月の頭に申請して20日にリリースとなりましたとさ。</p>
+<p>いまは機能追加とかは少し休んでますが、落ち着いたらさらなるバージョンアップへ向けて動き出します。いろいろ要望もたまってますしね。昨日は、電子書籍の有名人(?)とも会ったりして楽しい話を聞けたりしました。色々コラボ出来たりすると面白いよなあとか思いながら、来年へ向けてこの勢いを衰えさせないように頑張っていきたいと思います。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>Thinkpad から MacBook Air へ移行して一ヶ月まとめ</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/336201957.html" />
+<modified>2010-12-02T15:47:08Z</modified>
+<issued>2010-12-02T11:19:57Z</issued>
+<id>tag:espion.just-size.jp,2010://1.750</id>
+<created>2010-12-02T11:19:57Z</created>
+<summary type="text/plain">まとめ書くブームに完全に乗り遅れましたが、10月に発表された MacBook Air を、それはもうすごい早さで購入して、仕事環境は全部こっちで出来るように移行しました。これまではThinkpadにUbuntu入れてウェブプログラムやってましたが、最近iPhoneアプリ開発ばっかりやってるので、Macメインな環境にしたいなーと思ってて、持ち運びがしやすいAirをずっと待ち望んでたので感無量です。 週二回くらい持ち運ぶ感じなので、そこまで軽くなくてもいいでしょうと13インチを選択。メモリとかスペックはマックス構成にしましたよ。イェーイ！ いや〜、それにしても薄くていいっすねー。バッテリもすごいもつし。あとは黒縁でアンチグレアな液晶のタイプがあればなーと思わずにいられません。 * トラックポイントからトラックパッドへ Thinkpadのトラックポイント超便利で大好きです。VaioC1の頃から考えると、もうかれこれ10年くらいはお世話になってるんですね。お陰で他メーカーのマシンに移行する気がまったく起きなくて…。特に重要なのは、第三ボタンの存在。ターミナル上で第三ボタンを押すとペーストされるのがずごい便利で文字選択のヤンクと組み合わせて最高な環境だと思ってます。 なので、この部分が一番障害だよなーと心配だったわけですけども、まあ結構慣れましたよトラックパッド。ジェスチャと慣性スクロールがいいですね。Thinkpadだとマウス無しはキツイナーって感じでしたが、Macだとトラックパッドだけでほぼ問題ないから外で作業するのもわりと快適。 * JISキーボードからUSキーボードへ いままでJISキーボードを使っていましたが、今回なんとなくノリでUSキーボードにチャレンジしてみることにしました。vimを使ってる時間がかなり長いわけですが、英語圏で開発されたソフトなので、やっぱUSキーボードの方が使いやすいんだろうなーと前から漠然と思っていたので挑戦です。 ……記号の位置が全然違うので、まだあんまり慣れていません。* とか ^ とかよく使うのに遠くなって正直不便。 あとreturnキーが近くて良いって聞くけど、使う前は「そんな変わらんでしょ、しかも小さいし」とか思ってましたゴメンナサイ。これはね、大分違いますな。いまJISキーボード触るとreturnが遠くてビビる。今のところよくなったと感じるのはそのくらいかなあ。コロンがどうしても使いにくいのでKeyRemap4MacBookで : と &apos; をスワップしちゃいました。へたれですまん。 * いまの不満 デュアルディスプレイがさ、ちょっと使いにくいんじゃないかと思うんですよ。サブディスプレイ上でFinderのファイルコピーする時に、上書き確認のダイアログがメインディスプレイに出た時はなんじゃこれと思いましたね。メニューも基本的にウィンドウから離れたどっか遠くにあるし。DejaMenuとかまだ使ってないけどこれで解決するかな。 UbuntuかX Window Systemかウィンドウマネージャかよくわかんないけど、ALTドラッグでウィンドウを移動して、ALT右ドラッグでウィンドウサイズを変更出来るって言う革命的に便利な機能があるんですよ。これの代替手段になりそうなのが見付からないのよね。2年前からちょくちょく探してるんだけど、満足いくものが見付からない。Zooom ってのがよさそうな感じだったんだけど、確か前に試した時はリサイズがスムーズじゃなかったような気がした。また試してみようかな。 最後に、Spotlightからのショートカットがすごい便利なんだけど、この中にVMWareの中のソフトが紛れてることがあって、間違えて選択するとVMWareが立ち上がってうざいのなんのって…。これリストから外す方法ないのかな。 * 使ってるソフトウェア こんなの使ってますよーってことで。 MacVim - Xcodeのエディタを使わないでvimを使うくらい好きです cocoa.vim++ iPhoneSDK with Xcode...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>まとめ書くブームに完全に乗り遅れましたが、10月に発表された <a href="http://www.apple.com/jp/macbookair/">MacBook Air</a> を、それはもうすごい早さで購入して、仕事環境は全部こっちで出来るように移行しました。これまではThinkpadにUbuntu入れてウェブプログラムやってましたが、最近iPhoneアプリ開発ばっかりやってるので、Macメインな環境にしたいなーと思ってて、持ち運びがしやすいAirをずっと待ち望んでたので感無量です。</p>
+<p>週二回くらい持ち運ぶ感じなので、そこまで軽くなくてもいいでしょうと13インチを選択。メモリとかスペックはマックス構成にしましたよ。イェーイ！</p>
+<p>いや〜、それにしても薄くていいっすねー。バッテリもすごいもつし。あとは黒縁でアンチグレアな液晶のタイプがあればなーと思わずにいられません。</p>
+<h3 ><a href="http://espion.just-size.jp/archives/10/336201957.html#20e38388e383a9e38383e382afe3839de382a4e383b3e38388e3818be38289e38388e383a9e38383e382afe38391e38383e38389e381b8" id="20e38388e383a9e38383e382afe3839de382a4e383b3e38388e3818be38289e38388e383a9e38383e382afe38391e38383e38389e381b8" >*</a> トラックポイントからトラックパッドへ</h3>
+<p>Thinkpadのトラックポイント超便利で大好きです。VaioC1の頃から考えると、もうかれこれ10年くらいはお世話になってるんですね。お陰で他メーカーのマシンに移行する気がまったく起きなくて…。特に重要なのは、第三ボタンの存在。ターミナル上で第三ボタンを押すとペーストされるのがずごい便利で文字選択のヤンクと組み合わせて最高な環境だと思ってます。</p>
+<p>なので、この部分が一番障害だよなーと心配だったわけですけども、まあ結構慣れましたよトラックパッド。ジェスチャと慣性スクロールがいいですね。Thinkpadだとマウス無しはキツイナーって感じでしたが、Macだとトラックパッドだけでほぼ問題ないから外で作業するのもわりと快適。</p>
+<h3 ><a href="http://espion.just-size.jp/archives/10/336201957.html#20JISe382ade383bce3839ce383bce38389e3818be38289USe382ade383bce3839ce383bce38389e381b8" id="20JISe382ade383bce3839ce383bce38389e3818be38289USe382ade383bce3839ce383bce38389e381b8" >*</a> JISキーボードからUSキーボードへ</h3>
+<p>いままでJISキーボードを使っていましたが、今回なんとなくノリでUSキーボードにチャレンジしてみることにしました。vimを使ってる時間がかなり長いわけですが、英語圏で開発されたソフトなので、やっぱUSキーボードの方が使いやすいんだろうなーと前から漠然と思っていたので挑戦です。</p>
+<p>……記号の位置が全然違うので、まだあんまり慣れていません。* とか ^ とかよく使うのに遠くなって正直不便。</p>
+<p>あとreturnキーが近くて良いって聞くけど、使う前は「そんな変わらんでしょ、しかも小さいし」とか思ってましたゴメンナサイ。これはね、大分違いますな。いまJISキーボード触るとreturnが遠くてビビる。今のところよくなったと感じるのはそのくらいかなあ。コロンがどうしても使いにくいのでKeyRemap4MacBookで : と ' をスワップしちゃいました。へたれですまん。</p>
+<h3 ><a href="http://espion.just-size.jp/archives/10/336201957.html#20e38184e381bee381aee4b88de6ba80" id="20e38184e381bee381aee4b88de6ba80" >*</a> いまの不満</h3>
+<p>デュアルディスプレイがさ、ちょっと使いにくいんじゃないかと思うんですよ。サブディスプレイ上でFinderのファイルコピーする時に、上書き確認のダイアログがメインディスプレイに出た時はなんじゃこれと思いましたね。メニューも基本的にウィンドウから離れたどっか遠くにあるし。DejaMenuとかまだ使ってないけどこれで解決するかな。</p>
+<p>UbuntuかX Window Systemかウィンドウマネージャかよくわかんないけど、ALTドラッグでウィンドウを移動して、ALT右ドラッグでウィンドウサイズを変更出来るって言う革命的に便利な機能があるんですよ。これの代替手段になりそうなのが見付からないのよね。2年前からちょくちょく探してるんだけど、満足いくものが見付からない。<a href="http://coderage-software.com/zooom/index_green/index.html">Zooom</a> ってのがよさそうな感じだったんだけど、確か前に試した時はリサイズがスムーズじゃなかったような気がした。また試してみようかな。</p>
+<p>最後に、Spotlightからのショートカットがすごい便利なんだけど、この中にVMWareの中のソフトが紛れてることがあって、間違えて選択するとVMWareが立ち上がってうざいのなんのって…。これリストから外す方法ないのかな。</p>
+<h3 ><a href="http://espion.just-size.jp/archives/10/336201957.html#20e4bdbfe381a3e381a6e3828be382bde38395e38388e382a6e382a7e382a2" id="20e4bdbfe381a3e381a6e3828be382bde38395e38388e382a6e382a7e382a2" >*</a> 使ってるソフトウェア</h3>
+<p>こんなの使ってますよーってことで。</p>
+<ul >
+<li> <a href="http://code.google.com/p/macvim-kaoriya/">MacVim</a> - Xcodeのエディタを使わないでvimを使うくらい好きです cocoa.vim++</li>
+<li> <a href="http://developer.apple.com/iphone/">iPhoneSDK with Xcode</a></li>
+<li> <a href="http://www.macroplant.com/phonedisk/">PhoneDisk</a> - iPhoneをつなぐと開発用アプリのDocumentディレクトリがマウントできて直接触れるので便利</li>
+<li> <a href="http://www.mozilla.com/firefox/">Firefox</a></li>
+<li> <a href="http://www.google.co.jp/chrome/">Google chrome</a> - 乗り換えようと思ったけど、まだFirefox使ってる。</li>
+<li> <a href="http://www.dropbox.com/">Dropbox</a></li>
+<li> <a href="http://www.skype.com/">Skype</a></li>
+<li> <a href="http://www.monokakido.jp/mac/kawasemi.html">かわせみ</a> - 日本語入力ソフト。MBPで使ってたのでライセンスを移動。ATOKも試してみたいと思っている</li>
+<li> <a href="http://www.tweetdeck.com/">TweetDeck</a> - Twitterクライアント。Ubuntuで使っててカラム表示便利なのでそのまま移行。AIRアプリは基本ユニバーサルだからこういう時いいよね</li>
+<li> <a href="http://www.pixelmator.com/">Pixelmator</a> - 画像編集ソフトのおすすめを聞くと圧倒的に人気なのがこのソフト。Ubuntuではgimp使ってたけどMac版はいまいちそうだったので乗り換え。日本語化もされてる→<a href="http://www.act2.com/products/pixelmator.html">サイト</a></li>
+<li> <a href="http://code.google.com/p/iterm2/">iTerm2</a> - ターミナルクライアント。Macはターミナルクライアントの選択肢があんまりないっすなあ。キーバインド指定出来るから、CMDキーをメタキーのように使えるように割り当てて使ってます</li>
+<li> <a href="http://www.macports.org/">MacPorts</a> - Unix系のソフト入れるのに使う</li>
+<li> <a href="http://ipmsg.org/">IP Messenger</a> - 某社で社内の連絡はこれを使うので</li>
+<li> <a href="http://www.apple.com/jp/iwork/">iWork</a> - KeyNote目当て</li>
+<li> <a href="http://ja.openoffice.org/">OpenOffice.org</a> - MSOffice for Macを買う気にはならないので、今まで通りOpenOfficeで見る。Linuxと使い勝手変わんないので助かる</li>
+<li> <a href="http://www.act2.com/products/fusion3.html">VMWare Fusion</a> - たまにWindowsでIE使ったりすることがあるんで。Linuxで使ってたイメージは移動できるんかな</li>
+<li> <a href="http://nnip.org/osx/FloatingStat/index.html">FloatingStat</a> -  CPUやネットワークの使用状況を手軽に見るソフト。いままではGkrellmを愛用してたんだけどX使うのやなんで。これあると、無限ループになったときとか何かのソフトが暴走してるとかすぐわかって便利</li>
+<li> <a href="http://sourceforge.net/projects/synergykm/">SynergyKM</a></li>
+<li> <a href="http://growl.info/">Growl</a> - Growl超いいっす</li>
+<li> <a href="http://www.snippetsapp.com/">Snippets</a> - コードスニペットツール。F12からすぐペースト出来るから便利</li>
+<li> <a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a> - キーボードを自由にいじれる感じのソフト。今見たら上の方で書いた : と ' のスワップにしか使ってなかった</li>
+<li> <a href="http://manytricks.com/witch/">Witch</a> - Cmd-Tabの切り替えを便利にするやつ。ウィンドウリストじゃなくて、実際のウィンドウがアクティベイトしながら切り替わってくれるソフトないかな？</li>
+</ul>
+<p>MacPortsからは、gitとかcoreutilsとか。最初、ターミナルの操作でmvやcpコマンドの動きがだいぶ違う感じでフォルダをmvしてるのに、中身が出ちゃったりとかよくわかんない感じだったんだけど、coreutilsを入れてgmvとかgcpとかをエイリアスしたら意図通りに動くようになりました。</p>
+<h3 ><a href="http://espion.just-size.jp/archives/10/336201957.html#20e69c80e5be8ce381ab" id="20e69c80e5be8ce381ab" >*</a> 最後に</h3>
+<p>Macいいっすなー。液晶がすごいキレイだよね。もともと初めて買ったコンピュータはMacの…LC630っていう懐かしい機種だったりして、そうそう6色iMacが出たときはマックワールドエキスポ行ったりもしたし、Macは好きなので戻ってこれて嬉しいですね。特にiPhoneとかと連携するソフトウェアとか、いままではさっぱり使えなかったけど、これからは世界が広がるのが期待出来ますなー。手始めに1Passwordを使えるようにしないとね。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>近況</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/223140203.html" />
+<modified>2010-08-11T05:14:19Z</modified>
+<issued>2010-08-11T05:02:03Z</issued>
+<id>tag:espion.just-size.jp,2010://1.749</id>
+<created>2010-08-11T05:02:03Z</created>
+<summary type="text/plain">ぜんぜん更新しなくなってしまったけど、ボチボチ書いていきましょうかね、宣伝とかを。 最近どんなことをやってますかというと、iPhoneの電子書籍色々やってます。 色々っていうの嘘、ダイヤモンド社から出てるだけですけど。というわけで、完全に時期を逸した感がありありですが、iPhone/iPad向けにダイヤモンド社から出てる電子書籍アプリ、もしドラ とか 適当日記 とかのリーダアプリの開発をやらせてもらっています。現在進行形でバージョンアップ作業中。 こんな記事にまでなってたりとか。 発売から１位独走！ iPhoneで読む『もしドラ』電子書籍 開発の舞台裏 あとなんか大体こんな感じ。 4月: ダイヤモンド社電子書籍アプリDReaderの開発 - 特設サイト 6月: ジョブズを見にWWDCへ - 写真 6月: ビールを飲みにドイツへ - 写真 7月: アクセルマーク社、サンマーク出版からDReaderを使った書籍アプリが配信 - これとかここ 8月: iPhoneSDK開発のレシピの姉妹書、Android SDK開発のレシピが登場 - ブログ記事...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>ぜんぜん更新しなくなってしまったけど、ボチボチ書いていきましょうかね、宣伝とかを。</p>
+<p>最近どんなことをやってますかというと、iPhoneの電子書籍色々やってます。</p>
+<p>色々っていうの嘘、ダイヤモンド社から出てるだけですけど。というわけで、完全に時期を逸した感がありありですが、iPhone/iPad向けにダイヤモンド社から出てる電子書籍アプリ、<a href="http://itunes.apple.com/jp/app/id368896651?mt=8">もしドラ</a> とか <a href="http://itunes.apple.com/jp/app/id373924297?mt=8">適当日記</a> とかのリーダアプリの開発をやらせてもらっています。現在進行形でバージョンアップ作業中。</p>
+<p>こんな記事にまでなってたりとか。</p>
+<ul >
+<li> <a href="http://diamond.jp/articles/-/8124">発売から１位独走！ iPhoneで読む『もしドラ』電子書籍 開発の舞台裏</a></li>
+</ul>
+<p>あとなんか大体こんな感じ。</p>
+<ul >
+<li> 4月: ダイヤモンド社電子書籍アプリDReaderの開発 - <a href="http://diamond.jp/e-books/">特設サイト</a></li>
+<li> 6月: ジョブズを見にWWDCへ - <a href="http://f.hatena.ne.jp/ktakayama/20100606100359">写真</a></li>
+<li> 6月: ビールを飲みにドイツへ - <a href="http://twitpic.com/1z1tzs">写真</a></li>
+<li> 7月: アクセルマーク社、サンマーク出版からDReaderを使った書籍アプリが配信 - <a href="http://itunes.apple.com/jp/app/id382206398?mt=8">これ</a>とか<a href="http://www.sunmark.co.jp/digital_c/appstore/">ここ</a></li>
+<li> 8月: iPhoneSDK開発のレシピの姉妹書、Android SDK開発のレシピが登場 - <a href="http://d.hatena.ne.jp/gabuchan/20100806/1281062339">ブログ記事</a></li>
+</ul>]]>
+
+</content>
+</entry>
+<entry>
+<title>iPhoneSDK 開発のレシピという本が出ました</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/114004908.html" />
+<modified>2010-04-23T15:59:37Z</modified>
+<issued>2010-04-23T15:49:08Z</issued>
+<id>tag:espion.just-size.jp,2010://1.748</id>
+<created>2010-04-23T15:49:08Z</created>
+<summary type="text/plain"> iPhone アプリ開発のお供に。 Trac界隈で有名な 広部さん と、iPhoneアプリ開発勉強会で知り合った 松浦さん と一緒になって、iPhone アプリの開発に便利そうなサンプルコード集といった体の解説書を一ヶ月ほど前に出しました。 アプリの作り方や Objective-C の概要はわかったけど、この後どうすりゃいいのかわからん？！というレベルの方を対象にしています。秀和システムさんのサイトの 書籍紹介 が詳しいので、これは？！と思った項目があったら即ゲットしましょう。なにげにコラムな内容が充実しています。 あと…デカくて高い開発本ばかりなのが気にくわなかったので、コンパクトなA5版でお値段もお願いして安くしてもらいました。コラム頑張ったのも、移動中に読んで楽しめるようにと考えてのことです。 書籍内で紹介しているコードに関しては、以下の github から取得することが出来るようになりました。 http://github.com/ktakayama/iPhoneSDK-RecipeBook いつもながら秀和システムさまのＫ氏には本当にお世話になりました。広部さんも松浦さんも無茶なスケジュールに文句も言わずコツコツやってくださり、本当に助かりました。ありがとうございました。...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798025798/webnotes-22/ref=nosim"  ><img class="amazon" src="http://images-jp.amazon.com/images/P/4798025798.09.MZZZZZZZ.jpg" border="0" alt="ISBN:4798025798:images" /></a></p>
+<p>iPhone アプリ開発のお供に。</p>
+<p>Trac界隈で有名な <a href="http://weekbuild.sakura.ne.jp/trac/">広部さん</a> と、iPhoneアプリ開発勉強会で知り合った <a href="http://www.syuhari.jp/blog/">松浦さん</a> と一緒になって、iPhone アプリの開発に便利そうなサンプルコード集といった体の解説書を一ヶ月ほど前に出しました。</p>
+<p>アプリの作り方や Objective-C の概要はわかったけど、この後どうすりゃいいのかわからん？！というレベルの方を対象にしています。秀和システムさんのサイトの <a href="http://www.shuwasystem.co.jp/products/7980html/2579.html">書籍紹介</a> が詳しいので、これは？！と思った項目があったら即ゲットしましょう。なにげにコラムな内容が充実しています。</p>
+<p>あと…デカくて高い開発本ばかりなのが気にくわなかったので、コンパクトなA5版でお値段もお願いして安くしてもらいました。コラム頑張ったのも、移動中に読んで楽しめるようにと考えてのことです。</p>
+<p>書籍内で紹介しているコードに関しては、以下の github から取得することが出来るようになりました。</p>
+<ul >
+<li> <a href="http://github.com/ktakayama/iPhoneSDK-RecipeBook"  >http://github.com/ktakayama/iPhoneSDK-RecipeBook</a></li>
+</ul>
+<p>いつもながら秀和システムさまのＫ氏には本当にお世話になりました。広部さんも松浦さんも無茶なスケジュールに文句も言わずコツコツやってくださり、本当に助かりました。ありがとうございました。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>ブラウザタイプのiPhoneアプリについて</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/056121201.html" />
+<modified>2010-02-25T03:21:53Z</modified>
+<issued>2010-02-25T03:12:01Z</issued>
+<id>tag:espion.just-size.jp,2010://1.747</id>
+<created>2010-02-25T03:12:01Z</created>
+<summary type="text/plain">はてブiPhoneアプリでログインしてはいけない を読んで。 もしかしたら開発者じゃない人には UIWebView の事ってあんまり知られてないんじゃないかなあと思ったので書いてみます。 PCとかのソフトでもそうなんでしょうけど、野良ブラウザアプリを使ってる場合は、いま見てるページが本物かどうかを見分ける方法は無いです。 iPhoneアプリの中には URL を入力してウェブページを表示するいわゆるブラウザアプリが多くありますが、ブラウザアプリに限らず、ウェブページを表示する場合は UIWebView というUIコンポーネントを利用してまして、Safari と同じような表示が簡単に出来ます。この UIWebView には単にHTMLページを表示するだけの機能しかなく、表示中のページの URL を画面に表示する機能は存在しません。 なもんで、アプリ内にアドレスバーっぽいものが出てても、それが本当に正しいのかを知る方法がありません。もちろん鍵マークなんて出ません。つまり、野良ブラウザアプリを使って銀行のサイトにログインしようとしたら、偽サイトに繋がってましたって事が、普通に起こります。この辺、実際は単にアプリ提供ベンダーの信頼性の話なもんで、ウェブアクセスに限った話じゃないんですけどね。 はてなブックマークのアプリのようにアクセス先の URL が表示されないのはそれ以前の問題で、当該アプリの利用者を狙って第三者が攻撃することが考えられるので、開発者においては自分の信頼性とは別にアドレスバーは作っておいた方が良いですよ。 まあ iPhoneのサファリ自体もイマイチなもんで SSL の発行者情報とか確認出来ない…ですよね？ EV-SSL には対応してるらしくて、そっちは表示されるけど、なんだかなあって思う。...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p><a href="http://takagi-hiromitsu.jp/diary/20100223.html#p01">はてブiPhoneアプリでログインしてはいけない</a> を読んで。</p>
+<p>もしかしたら開発者じゃない人には UIWebView の事ってあんまり知られてないんじゃないかなあと思ったので書いてみます。</p>
+<p>PCとかのソフトでもそうなんでしょうけど、野良ブラウザアプリを使ってる場合は、いま見てるページが本物かどうかを見分ける方法は無いです。</p>
+<p>iPhoneアプリの中には URL を入力してウェブページを表示するいわゆるブラウザアプリが多くありますが、ブラウザアプリに限らず、ウェブページを表示する場合は UIWebView というUIコンポーネントを利用してまして、Safari と同じような表示が簡単に出来ます。この UIWebView には単にHTMLページを表示するだけの機能しかなく、表示中のページの URL を画面に表示する機能は存在しません。</p>
+<p>なもんで、アプリ内にアドレスバーっぽいものが出てても、それが本当に正しいのかを知る方法がありません。もちろん鍵マークなんて出ません。つまり、野良ブラウザアプリを使って銀行のサイトにログインしようとしたら、偽サイトに繋がってましたって事が、普通に起こります。この辺、実際は単にアプリ提供ベンダーの信頼性の話なもんで、ウェブアクセスに限った話じゃないんですけどね。</p>
+<p>はてなブックマークのアプリのようにアクセス先の URL が表示されないのはそれ以前の問題で、当該アプリの利用者を狙って第三者が攻撃することが考えられるので、開発者においては自分の信頼性とは別にアドレスバーは作っておいた方が良いですよ。</p>
+<p>まあ iPhoneのサファリ自体もイマイチなもんで SSL の発行者情報とか確認出来ない…ですよね？ EV-SSL には対応してるらしくて、そっちは表示されるけど、なんだかなあって思う。</p>]]>
+
+</content>
+</entry>
+<entry>
+<title>青空キンドルの利用回数が1万回を越えました</title>
+<link rel="alternate" type="text/html" href="http://espion.just-size.jp/archives/10/027100857.html" />
+<modified>2010-01-27T01:16:04Z</modified>
+<issued>2010-01-27T01:08:57Z</issued>
+<id>tag:espion.just-size.jp,2010://1.746</id>
+<created>2010-01-27T01:08:57Z</created>
+<summary type="text/plain">国際版 KindleDX の登場でますます盛り上がる Kindle 界。私も青空文庫の書籍を Kindle2 の方で読みやすい PDF に変換する 青空キンドル なんてものを作りましたが、こいつの変換回数が1万回を越えましたので、ちょっとデータをまとめてみます。(2010.01.27 08:26現在) ログ取得開始: 2009.12.02 15:24 ログ取得期間: 57日 変換回数: 10150回 一日平均: 178回/日 変換された作品の種類: 2507冊 IPアドレスベースですが、利用者数とか。 利用者数推定: 1399人 平均変換回数: 7.25回/人 この中で、1回しか使ってないよって人が483人いるので除いてみた。 利用者数推定: 916人 平均変換回数: 10.55回/人 でもって、人気ランキング。変換トップ10です。 213回 我輩は猫である (夏目漱石) 190回 こころ (夏目漱石)...</summary>
+<author>
+<name>Kyosuke Takayama</name>
+
+<email>loiseau+nos@gmail.com</email>
+</author>
+
+<content type="text/html" mode="escaped" xml:lang="en" xml:base="http://espion.just-size.jp/">
+<![CDATA[<p>国際版 KindleDX の登場でますます盛り上がる Kindle 界。私も青空文庫の書籍を Kindle2 の方で読みやすい PDF に変換する <a href="http://a2k.aill.org/">青空キンドル</a> なんてものを作りましたが、こいつの変換回数が1万回を越えましたので、ちょっとデータをまとめてみます。(2010.01.27 08:26現在)</p>
+<ul >
+<li> ログ取得開始: 2009.12.02 15:24</li>
+<li> ログ取得期間: 57日</li>
+<li> 変換回数: 10150回</li>
+<li> 一日平均: 178回/日</li>
+<li> 変換された作品の種類: 2507冊</li>
+</ul>
+<p>IPアドレスベースですが、利用者数とか。</p>
+<ul >
+<li> 利用者数推定: 1399人</li>
+<li> 平均変換回数: 7.25回/人</li>
+</ul>
+<p>この中で、1回しか使ってないよって人が483人いるので除いてみた。</p>
+<ul >
+<li> 利用者数推定: 916人</li>
+<li> 平均変換回数: 10.55回/人</li>
+</ul>
+<p>でもって、人気ランキング。変換トップ10です。</p>
+<ul >
+<li> 213回 <a href="http://www.aozora.gr.jp/cards/000148/card789.html">我輩は猫である</a> (夏目漱石)</li>
+<li> 190回 <a href="http://www.aozora.gr.jp/cards/000148/card773.html">こころ</a> (夏目漱石)</li>
+<li> 148回 <a href="http://www.aozora.gr.jp/cards/000035/card2253.html">ヴィヨンの妻</a> (太宰治)</li>
+<li> 136回 <a href="http://www.aozora.gr.jp/cards/000035/card301.html">人間失格</a> (太宰治)</li>
+<li> 130回 <a href="http://www.aozora.gr.jp/cards/000148/card752.html">坊ちゃん</a> (夏目漱石)</li>
+<li> 130回 <a href="http://www.aozora.gr.jp/cards/000096/card2093.html">ドグラ・マグラ</a> (夢野久作)</li>
+<li> 121回 <a href="http://www.aozora.gr.jp/cards/000156/card1465.html">蟹工船</a> (小林多喜二)</li>
+<li> 119回 <a href="http://www.aozora.gr.jp/cards/000148/card794.html">三四郎</a> (夏目漱石)</li>
+<li> 102回 <a href="http://www.aozora.gr.jp/cards/000296/card47061.html">学問のすすめ</a> (福沢諭吉)</li>
+<li> 77回 <a href="http://www.aozora.gr.jp/cards/000148/card1746.html">それから</a> (夏目漱石)</li>
+</ul>
+<p>夏目漱石人気ありすぎワロタ。青空文庫が公開している <a href="http://www.aozora.gr.jp/access_ranking/2009_txt.html">アクセスランキング2009年版</a> なんかと見比べてみるのもおもしろい。青空文庫の中でも屈指の長編である「我輩は猫である」がトップにきてるが、ダウンロードした人はほんと最後まで読んだのか、Kindle で日本語長文を読むのはいけてるのか、実際に読みきった人の意見が聞いてみたいですね。私は短篇をいくつか読んだくらいです。</p>
+<p>青空文庫は8000冊以上登録されてるんですが、その中の2500冊もの作品が変換されてるってのもなかなか幅広くて、利用者層も色々なのかなとか想像しますが、わかんないけど。</p>
+<p>でもって、変換回数の日別グラフも作ってみました。</p>
+<p><a href="http://graph.hatena.ne.jp/gaba/%E9%9D%92%E7%A9%BA%E3%82%AD%E3%83%B3%E3%83%89%E3%83%AB/"><img src="http://graph.hatena.ne.jp/gaba/graph?graphname=%E9%9D%92%E7%A9%BA%E3%82%AD%E3%83%B3%E3%83%89%E3%83%AB" width="130" height="90" alt="gabaの青空キンドル"></a></p>
+<p>最初にデカいピークがきてますが、kengo さんが紹介してくれた<span class="footnote"><a title="青空文庫のファイルを縦書きで PDF に変換してくれる、青空文庫 to Kindle" href="#footnote_746t1" id="footnote_746t1_root" >*1</a></span>影響です。これがあったから、急ピッチで完成させたってのがありますが。他にもいろんな所で紹介してもらったりとかあるんですが、あまり大きな変化はなく、ほそぼそと使われてる感じです。</p>
+<p>古典しかない青空文庫＆Kindleと言う割とマイナーだと思われるデバイスでこんだけ利用されてるってのも、電子書籍の需要は結構なもんなんじゃないかなーと思うんですよ。先日は日本語の漫画が登場して大いに盛り上がりました<span class="footnote"><a title="日本初？　kindleで日本語漫画を出してみよう企画" href="#footnote_746t2" id="footnote_746t2_root" >*2</a></span>。日本の出版社ものんびりしてると乗り遅れるので、ぜひ頑張ってもらいたいものです。</p>
+<p>自分はこんな事してないで、早く DX で見やすく対応させろって感じですね。あと文字サイズ変更もね。やりたい。頑張ります。とか、のんびりしてるうちに、公式で日本語対応＋もっと便利な変換サービスが出たりしてね。</p>
+<ul class="footnote">
+<li class="footnote"><a id="footnote_746t1"  href="#footnote_746t1_root">*1</a>: <a href="http://kengo.preston-net.com/archives/004365.shtml">青空文庫のファイルを縦書きで PDF に変換してくれる、青空文庫 to Kindle</a></li><li class="footnote"><a id="footnote_746t2"  href="#footnote_746t2_root">*2</a>: <a href="http://blog.chabudai.com/?cid=38078">日本初？　kindleで日本語漫画を出してみよう企画</a></li>
+</ul>]]>
+
+</content>
+</entry>
+
+</feed>

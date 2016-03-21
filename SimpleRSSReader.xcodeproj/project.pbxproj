@@ -10,6 +10,8 @@
 		75CF0FE95436B28AA89CFBA8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A807E8977E819B96A00AB410 /* Pods.framework */; };
 		B92EBA051C9B9E4A00682E1E /* FeedList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B92EBA041C9B9E4A00682E1E /* FeedList.storyboard */; };
 		B92EBA071C9B9E5600682E1E /* EntryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B92EBA061C9B9E5600682E1E /* EntryList.storyboard */; };
+		B92EBA451CA02BB800682E1E /* test_sample_atom.xml in Resources */ = {isa = PBXBuildFile; fileRef = B92EBA431CA02BB800682E1E /* test_sample_atom.xml */; };
+		B92EBA461CA02BB800682E1E /* test_sample_rss2.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = B92EBA441CA02BB800682E1E /* test_sample_rss2.0.xml */; };
 		B947782D1C895995005D9380 /* SimpleRSSReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B947782C1C895995005D9380 /* SimpleRSSReaderTests.swift */; };
 		B94778381C895995005D9380 /* SimpleRSSReaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94778371C895995005D9380 /* SimpleRSSReaderUITests.swift */; };
 		B947784F1C895A0D005D9380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B947784B1C895A0D005D9380 /* Assets.xcassets */; };
@@ -52,6 +54,8 @@
 		A807E8977E819B96A00AB410 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B92EBA041C9B9E4A00682E1E /* FeedList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FeedList.storyboard; sourceTree = "<group>"; };
 		B92EBA061C9B9E5600682E1E /* EntryList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EntryList.storyboard; sourceTree = "<group>"; };
+		B92EBA431CA02BB800682E1E /* test_sample_atom.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test_sample_atom.xml; sourceTree = "<group>"; };
+		B92EBA441CA02BB800682E1E /* test_sample_rss2.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test_sample_rss2.0.xml; sourceTree = "<group>"; };
 		B94778141C895994005D9380 /* SimpleRSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleRSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94778281C895995005D9380 /* SimpleRSSReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRSSReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B947782C1C895995005D9380 /* SimpleRSSReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRSSReaderTests.swift; sourceTree = "<group>"; };
@@ -120,6 +124,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B92EBA421CA02BB800682E1E /* sampleData */ = {
+			isa = PBXGroup;
+			children = (
+				B92EBA431CA02BB800682E1E /* test_sample_atom.xml */,
+				B92EBA441CA02BB800682E1E /* test_sample_rss2.0.xml */,
+			);
+			path = sampleData;
+			sourceTree = "<group>";
+		};
 		B947780B1C895994005D9380 = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				B99544291C8F18A700ABD259 /* libs */,
+				B92EBA421CA02BB800682E1E /* sampleData */,
 				B947782C1C895995005D9380 /* SimpleRSSReaderTests.swift */,
 				B947782E1C895995005D9380 /* Info.plist */,
 			);
@@ -367,6 +381,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B92EBA451CA02BB800682E1E /* test_sample_atom.xml in Resources */,
+				B92EBA461CA02BB800682E1E /* test_sample_rss2.0.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
