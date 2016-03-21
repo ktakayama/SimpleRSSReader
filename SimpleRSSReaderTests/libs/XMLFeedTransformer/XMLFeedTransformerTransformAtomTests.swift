@@ -22,6 +22,16 @@ class XMLFeedTransformerTransformAtomTests: XCTestCase {
         }
     }
 
+    func testCompatibility() {
+        XCTAssertTrue(XMLFeedTransformerTransformAtom().isCompatibleType(xmlData))
+    }
+
+    func testNoCompatible() {
+        let xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xmlBody>\n</xmlBody>\n"
+        let invalidData = SWXMLHash.parse(xmlString)
+        XCTAssertFalse(XMLFeedTransformerTransformAtom().isCompatibleType(invalidData))
+    }
+
     func testTransformFromTransformer() {
         guard let feed: Feed = try? XMLFeedTransformerTransformAtom().transform(xmlData) else {
             XCTFail("Failed to transform xmlString")

@@ -23,6 +23,13 @@ class XMLFeedTransformerTransformRSSTests: XCTestCase {
     }
 
     func testCompatibility() {
+        XCTAssertTrue(XMLFeedTransformerTransformRSS().isCompatibleType(xmlData))
+    }
+
+    func testNoCompatible() {
+        let xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xmlBody>\n</xmlBody>\n"
+        let invalidData = SWXMLHash.parse(xmlString)
+        XCTAssertFalse(XMLFeedTransformerTransformRSS().isCompatibleType(invalidData))
     }
 
     func testBasicTransform() {
