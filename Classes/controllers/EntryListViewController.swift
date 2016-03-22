@@ -15,7 +15,7 @@ import SwiftTask
 
 class EntryListViewController: UITableViewController, RealmResultsControllerDefaultDelegate {
 
-    var rrc: RealmResultsController<Entry, Entry>?
+    private var rrc: RealmResultsController<Entry, Entry>?
 
     var feed: Feed? {
         didSet {

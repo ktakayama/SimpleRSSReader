@@ -40,7 +40,7 @@ final class FeedManager: NSObject {
         }
     }
 
-    var taskCache = [ String:FeedTask ]()
+    private var taskCache = [ String:FeedTask ]()
 
     class func fetchFeed(feed: Feed) -> FeedTask {
         return FeedManager.sharedInstance.fetchFeed(feed)

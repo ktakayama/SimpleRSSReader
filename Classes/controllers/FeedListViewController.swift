@@ -15,8 +15,8 @@ import SwiftTask
 
 class FeedListViewController: UITableViewController, RealmResultsControllerDefaultDelegate {
 
-    var realm: Realm
-    var rrc: RealmResultsController<Feed, Feed>
+    private var realm: Realm
+    private var rrc: RealmResultsController<Feed, Feed>
     var feedSelectionHandler: ((feed: Feed) -> (Void))?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
