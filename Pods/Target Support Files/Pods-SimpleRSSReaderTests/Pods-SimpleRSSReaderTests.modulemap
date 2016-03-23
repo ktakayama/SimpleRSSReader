@@ -1,0 +1,6 @@
+framework module Pods_SimpleRSSReaderTests {
+  umbrella header "Pods-SimpleRSSReaderTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -13,4 +13,7 @@ pod 'UIActivityIndicator-for-SDWebImage'
 pod 'UIAlertControllerExtension'
 pod 'CZDateFormatterCache'
 
+target "SimpleRSSReaderTests" do
+    pod 'Mockingjay'
+end
 
