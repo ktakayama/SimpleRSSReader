@@ -107,13 +107,14 @@ extension Alamofire.Request {
                 do {
                     let xmlData = String(NSString(data:data, encoding:NSUTF8StringEncoding)!)
                     let object: Feed = try XMLFeedTransformer.transform(xmlData)
-                    return Alamofire.Result.Success(object)
-                } catch {
+                    return .Success(object)
+                } catch let error as NSError {
+                    return .Failure(error)
                 }
             }
 
             let e = Error.errorWithCode(0, failureReason: "xml feed transform error")
-            return Alamofire.Result.Failure(e)
+            return .Failure(e)
         }
 
         return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
