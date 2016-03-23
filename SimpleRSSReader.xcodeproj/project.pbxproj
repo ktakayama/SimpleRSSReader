@@ -33,6 +33,7 @@
 		B9AE260B1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE260A1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift */; };
 		B9AE260D1C99A5E1009FB765 /* EntryListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE260C1C99A5E1009FB765 /* EntryListCellView.swift */; };
 		B9AE26111C9AE418009FB765 /* FeedListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE26101C9AE418009FB765 /* FeedListViewCell.swift */; };
+		B9AE4E6F1CA18A0E0065DB49 /* FeedManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE4E6E1CA18A0E0065DB49 /* FeedManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		B9AE260A1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResultsControllerDefaultDelegate.swift; sourceTree = "<group>"; };
 		B9AE260C1C99A5E1009FB765 /* EntryListCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryListCellView.swift; sourceTree = "<group>"; };
 		B9AE26101C9AE418009FB765 /* FeedListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewCell.swift; sourceTree = "<group>"; };
+		B9AE4E6E1CA18A0E0065DB49 /* FeedManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManagerTests.swift; sourceTree = "<group>"; };
 		FB0CC91EC10556E827908FE0 /* Pods_SimpleRSSReaderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleRSSReaderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				B92EBA4F1CA03C7500682E1E /* FeedTests.swift */,
+				B9AE4E6E1CA18A0E0065DB49 /* FeedManagerTests.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				B995442C1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift in Sources */,
 				B92EBA501CA03C7500682E1E /* FeedTests.swift in Sources */,
 				B92EBA481CA0356400682E1E /* XMLFeedTransformerTests.swift in Sources */,
+				B9AE4E6F1CA18A0E0065DB49 /* FeedManagerTests.swift in Sources */,
 				B92EBA4D1CA03A5400682E1E /* TestCaseBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
