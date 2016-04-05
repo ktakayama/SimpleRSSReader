@@ -27,7 +27,7 @@ class FeedManagerTests: TestCaseBase {
     }
 
     func testFetchSingleFeed() {
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription("fetch single feed")
 
         self.stub(uri(testFeedURL), builder:http(data:xmlString.dataUsingEncoding(NSUTF8StringEncoding)))
 
@@ -44,7 +44,7 @@ class FeedManagerTests: TestCaseBase {
     }
 
     func testNotFoundFeed() {
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription("not found")
 
         let error = NSError(domain:"error", code:404, userInfo:nil)
         self.stub(uri(testFeedURL), builder:failure(error))
@@ -64,7 +64,7 @@ class FeedManagerTests: TestCaseBase {
     }
 
     func testParseErrorFeed() {
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription("parse error")
 
         let str = "<feed xmlns=\"http://purl.org/atom/ns#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xml:lang=\"ja\">\n"
         self.stub(uri(testFeedURL), builder:http(data:str.dataUsingEncoding(NSUTF8StringEncoding)))
@@ -84,7 +84,7 @@ class FeedManagerTests: TestCaseBase {
     }
 
     func testFetchMultiFeed() {
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription("fetch multi feed")
 
         let customTestFeedCount = 10
 
