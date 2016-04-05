@@ -31,10 +31,12 @@ class XMLFeedTransformer: NSObject {
     class func transform<T: XMLFeedTransformable where T.TransformType == T>(xmlData: String) throws -> T {
         let xml = SWXMLHash.parse(xmlData)
 
-        for transform: XMLFeedTransformerTransformType in [
+        let transforms: [ XMLFeedTransformerTransformType ] = [
             XMLFeedTransformerTransformAtom(),
             XMLFeedTransformerTransformRSS()
-        ] {
+        ]
+
+        for transform in transforms {
             if transform.isCompatibleType(xml) {
                 return try transform.transform(xml)
             }
