@@ -9,7 +9,7 @@
 import Foundation
 
 protocol XMLFeedTransformable {
-    typealias TransformType = Self
+    associatedtype TransformType = Self
 
     static func mapping(feedInfo: XMLFeedInfo, feedItems: [ XMLFeedItem ]) -> TransformType
 }
