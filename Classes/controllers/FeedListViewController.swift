@@ -69,6 +69,8 @@ class FeedListViewController: UITableViewController, RealmResultsControllerDefau
                 try self.realm.write {
                     self.realm.addNotified(feed)
                 }
+
+                self.permitApplicationBadge()
             } catch let error as NSError {
                 self.presentAlert(title:String(error.code), message:error.localizedDescription, actionTitles: [ "OK" ])
             }
@@ -77,6 +79,20 @@ class FeedListViewController: UITableViewController, RealmResultsControllerDefau
             SVProgressHUD.dismiss()
             self.presentAlert(title:String(error?.code), message:error?.localizedDescription, actionTitles: [ "OK" ])
         }
+    }
+
+    func permitApplicationBadge() {
+        let key = "DidShowAlertForPermitApplicationBadge"
+        let settings = UIUserNotificationSettings(forTypes:.Badge, categories:nil)
+        if NSUserDefaults.standardUserDefaults().boolForKey(key) {
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            return
+        }
+
+        self.presentAlert(title:"Display unread count on home screen", message:nil, actionTitles: [ "OK" ], handler: { _ in
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey:key)
+        })
     }
 
     // MARK: - Table view data source
