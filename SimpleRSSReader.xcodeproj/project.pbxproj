@@ -28,6 +28,7 @@
 		B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */; };
 		B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */; };
 		B995442C1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */; };
+		B997F9561CB40004009F1886 /* EntryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B997F9551CB40004009F1886 /* EntryManager.swift */; };
 		B9AE26071C96F99C009FB765 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE26061C96F99C009FB765 /* FeedListViewController.swift */; };
 		B9AE26091C96F9A6009FB765 /* EntryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE26081C96F9A6009FB765 /* EntryListViewController.swift */; };
 		B9AE260B1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE260A1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift */; };
@@ -84,6 +85,7 @@
 		B99544251C8DBD4400ABD259 /* XMLFeedTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformable.swift; sourceTree = "<group>"; };
 		B99544271C8DBD4D00ABD259 /* XMLFeedTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformer.swift; sourceTree = "<group>"; };
 		B995442B1C8F18C800ABD259 /* XMLFeedTransformerTransformRSSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLFeedTransformerTransformRSSTests.swift; sourceTree = "<group>"; };
+		B997F9551CB40004009F1886 /* EntryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryManager.swift; sourceTree = "<group>"; };
 		B9AE26061C96F99C009FB765 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		B9AE26081C96F9A6009FB765 /* EntryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryListViewController.swift; sourceTree = "<group>"; };
 		B9AE260A1C999754009FB765 /* RealmResultsControllerDefaultDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResultsControllerDefaultDelegate.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				B995441C1C8DBCBF00ABD259 /* Entry.swift */,
+				B997F9551CB40004009F1886 /* EntryManager.swift */,
 				B995441E1C8DBCCF00ABD259 /* Feed.swift */,
 				B9596C4A1C9066D70045227C /* FeedManager.swift */,
 			);
@@ -530,6 +533,7 @@
 				B995441F1C8DBCCF00ABD259 /* Feed.swift in Sources */,
 				B99544281C8DBD4D00ABD259 /* XMLFeedTransformer.swift in Sources */,
 				B9596C4B1C9066D70045227C /* FeedManager.swift in Sources */,
+				B997F9561CB40004009F1886 /* EntryManager.swift in Sources */,
 				B99544261C8DBD4400ABD259 /* XMLFeedTransformable.swift in Sources */,
 				B9AE26071C96F99C009FB765 /* FeedListViewController.swift in Sources */,
 				B9AE260D1C99A5E1009FB765 /* EntryListCellView.swift in Sources */,
